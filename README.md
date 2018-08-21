@@ -1,27 +1,33 @@
 # README_template title of repo for
 
-A brief technical description of this app and who made it and contributes
-A React app with Firebase integrations created by mewc (croft1)
+
+A React app with Firebase authentication, database and deployment, querying with GraphQL and Spotify API usage all behind a Material-Ui front-end.
+
+Created by [mewc](https://github.com/mewc)
 
 ## Purpose
 
-1. What this app does
-1. and why it exists
+1. A user can submit song requests to a DJ
+1. A venue/person/event can create a room and people submit song requests by searching through spotifys records
 
 ## Outcomes
 
-1. What do I propose to get out of this
-1. Either personally
-1. or what the project serves for other people
-1. eg. I will learn React, and this app can help students
+1. Learning of Firebase usages - Authentication, deployment, database
+1. Using an enterprise API like Spotify
+1. Learn to use GraphQL
+1. Sell the product to places to use
 
 ## Progress
 
-View the trello board (invite only)
+View the [trello board](https://trello.com/b/9Mwk1r7h/oi-mr-dj) (invite only)
 
 ## Scaling goals
 
-1. POints of identified areas of scalability
+1. Person sends request to DJ for approval
+1. Subscription limits for number of users ($)
+1. Add in YouTube video queue rooms
+1. Add in image submission queues
+1. Add in room voting/approval (so admin isn't solely relied on)
  ___
 
 ## Want to contribute?
@@ -38,12 +44,7 @@ Please send me a message. You can have a go at modifying or working on issues by
 
 #### Live Deployment
 
-not available just yet, stay tuned.
-Heroku:
-
-### Contributing
-
-Please message us if you're interested in contributing.
+not available.
 
 #### Authors
 
