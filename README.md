@@ -1,4 +1,6 @@
-# README_template title of repo for
+# OI MR DJ
+
+[![Build Status](https://travis-ci.com/mewc/oimrdj.svg?token=9ix4AVGY6pbGpLzLTi51&branch=master)](https://travis-ci.com/mewc/oimrdj)
 
 
 A React app with Firebase authentication, database and deployment, querying with GraphQL and Spotify API usage all behind a Material-Ui front-end.
