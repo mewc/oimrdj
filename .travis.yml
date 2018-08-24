@@ -14,3 +14,9 @@ deploy:
   project: ./build/
 on:
   branch: master
+deploy:
+  provider: firebase
+  skip_cleanup: true
+  token: 1/OW9ZA3aOtxonZ4SzaGCXClZ6Fd9N7S7eg4jbw8t0ulg
+on:
+  branch: master
