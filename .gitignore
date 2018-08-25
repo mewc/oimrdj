@@ -35,6 +35,4 @@ node_modules
 
 build/
 
-src/js/Client\.js
-
 DEVNOTES\.md
