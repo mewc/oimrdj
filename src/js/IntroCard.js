@@ -40,7 +40,8 @@ function MediaCard(props) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <AuthButton />
+                {str.LABEL_LOGIN}
+                <AuthButton handleAuthEvent={props.handleAuthEvent} isLoggedIn={props.isLoggedIn}/>
             </CardActions>
         </Card>
     );

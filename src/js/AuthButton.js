@@ -1,37 +1,67 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-import { TiSocialFacebookCircular } from 'react-icons/ti'
+import {TiSocialFacebook} from 'react-icons/ti'
 
 
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import * as str from '../static/Strings';
+import {auth, provider} from "./Client";
 
-const styles = theme => ({
-    button: {
-        margin: theme.spacing.unit,
-    },
-    extendedIcon: {
-        marginRight: theme.spacing.unit,
-    },
-});
 
-function AuthButton(props) {
-    const { classes } = props;
-    return (
-        <div>
-            <Button color="primary" variant="extendedFab" aria-label="Delete" className={classes.button}>
-                { str.LABEL_LOGIN }
-                <TiSocialFacebookCircular className={classes.extendedFab}/>
+class AuthButton extends Component {
+
+
+    constructor(props, AuthButton) {
+        super(props);
+        this.AuthButton = AuthButton;
+
+        this.state = {
+            classes: PropTypes.object.isRequired,
+        };
+
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+    }
+
+    handleLoginClick() {
+        auth().signInWithPopup(provider).then((result) => {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            const token = result.credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+
+            this.props.handleAuthEvent(user);
+
+        }).catch(function (error) {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            const credential = error.credential;
+            console.log([error, errorCode, errorMessage, email, credential]);
+        });
+
+
+    }
+
+    handleLogoutClick() {
+        auth().signOut().then(() => {
+            this.setState({user: null})
+        })
+    }
+
+
+    render() {
+        return (
+            <Button color="primary" variant="extendedFab" aria-label="Delete" className={this.state.classes.button}
+                    onClick={this.handleLoginClick}>
+                <TiSocialFacebook className={this.state.classes.extendedFab}/>
+                {str.LABEL_LOGIN}
             </Button>
-        </div>
-    );
+        );
+    }
 }
 
-AuthButton.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(AuthButton);
-
+export default AuthButton;

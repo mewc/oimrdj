@@ -20,3 +20,6 @@ deploy:
   token: 1/OW9ZA3aOtxonZ4SzaGCXClZ6Fd9N7S7eg4jbw8t0ulg
 on:
   branch: master
+
+# the token bit for firebase should be encrypted, but travis CLI isn't outputting the encrypted
+# https://docs.travis-ci.com/user/encryption-keys/#Usage
