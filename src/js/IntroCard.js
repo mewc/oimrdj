@@ -1,12 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React, {Component} from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { FaCompactDisc } from 'react-icons/fa/';
+import {FaCompactDisc} from 'react-icons/fa/';
 
 import * as str from '../static/Strings';
 import AuthButton from "./AuthButton";
@@ -22,33 +20,34 @@ const styles = {
     },
 };
 
-function MediaCard(props) {
-    const { classes } = props;
-    return (
-        <Card className={classes.card}>
-            <CardMedia
-                className={classes.media}
-                image="../static/images/dj_static.jpg"
-                title="DJ in action"
-            />
-            <CardContent>
-                <Typography gutterBottom variant="headline" component="h2">
-                    { str.APP_NAME } <FaCompactDisc />
-                </Typography>
-                <Typography component="p">
-                    { str.APP_BIO }
-                </Typography>
-            </CardContent>
-            <CardActions>
-                {str.LABEL_LOGIN}
-                <AuthButton handleAuthEvent={props.handleAuthEvent} isLoggedIn={props.isLoggedIn}/>
-            </CardActions>
-        </Card>
-    );
+class IntroCard extends Component {
+
+
+
+
+    render() {
+        return (
+            <Card style={styles.card}>
+                <CardMedia
+                    style={styles.media}
+                    image="../static/images/dj_static.jpg"
+                    title="DJ in action"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="headline" component="h2">
+                        {str.APP_NAME} <FaCompactDisc/>
+                    </Typography>
+                    <Typography component="p">
+                        {str.APP_BIO}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                            <AuthButton handleAuthEvent={this.props.handleAuthEvent} isLoggedIn={this.props.user}/>
+                </CardActions>
+            </Card>
+        );
+    }
+
 }
 
-MediaCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(MediaCard);
+export default IntroCard;

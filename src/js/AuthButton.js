@@ -6,15 +6,14 @@ import {TiSocialFacebook} from 'react-icons/ti'
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import * as str from '../static/Strings';
-import {auth, provider} from "./Client";
+import {auth, provider, db} from "./Client";
 
 
 class AuthButton extends Component {
 
 
-    constructor(props, AuthButton) {
+    constructor(props) {
         super(props);
-        this.AuthButton = AuthButton;
 
         this.state = {
             classes: PropTypes.object.isRequired,
@@ -32,15 +31,25 @@ class AuthButton extends Component {
 
             this.props.handleAuthEvent(user);
 
+            let userData = {
+                name: user.displayName,
+                photoUrl: user.photoURL,
+                phone: user.phoneNumber,
+                isAnonymous: user.isAnonymous,
+            };
+            db.toString();
+            console.log(userData);
+
         }).catch(function (error) {
             // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            const credential = error.credential;
-            console.log([error, errorCode, errorMessage, email, credential]);
+            // const errorCode = error.code;
+            // const errorMessage = error.message;
+            // // The email of the user's account used.
+            // const email = error.email;
+            // // The firebase.auth.AuthCredential type that was used.
+            // const credential = error.credential;
+             console.log(error);
+            // console.log([error, errorCode, errorMessage, email, credential]);
         });
 
 
