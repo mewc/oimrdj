@@ -47,7 +47,7 @@ class App extends Component {
     }
 
     testSend() {
-        db.ref('/test/' + '2' ).set({
+        db.ref('/test/2' ).set({
             test: 'test',
             name: 1,
             hello: 'hi'
