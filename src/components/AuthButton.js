@@ -6,7 +6,7 @@ import {TiSocialFacebook} from 'react-icons/ti'
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import * as str from '../static/Strings';
-import {auth, provider, db} from "./Client";
+
 
 
 class AuthButton extends Component {

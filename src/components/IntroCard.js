@@ -22,7 +22,12 @@ const styles = {
 
 class IntroCard extends Component {
 
-
+    constructor(props){
+      super(props);
+      this.state = {
+        CurrentBio: str.APP_BIO_VARIANTS[0]
+      };
+    }
 
 
     render() {
@@ -38,7 +43,7 @@ class IntroCard extends Component {
                         {str.APP_NAME} <FaCompactDisc/>
                     </Typography>
                     <Typography component="p">
-                        {str.APP_BIO}
+                        {this.state.CurrentBio}
                     </Typography>
                 </CardContent>
                 <CardActions>
