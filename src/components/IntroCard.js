@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,6 +11,7 @@ import {FaCompactDisc} from 'react-icons/fa/';
 
 import * as str from '../static/Strings';
 import AuthButton from "./AuthButton";
+import {loginUser, logoutUser} from "../actions/authActions";
 
 const styles = {
     card: {
@@ -47,7 +51,7 @@ class IntroCard extends Component {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                            <AuthButton handleAuthEvent={this.props.handleAuthEvent} isLoggedIn={this.props.user}/>
+                            <AuthButton />
                 </CardActions>
             </Card>
         );
@@ -55,4 +59,15 @@ class IntroCard extends Component {
 
 }
 
-export default IntroCard;
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({loginUser, logoutUser}, dispatch);
+}
+
+export default  connect(mapStateToProps, mapDispatchToProps)  (IntroCard);

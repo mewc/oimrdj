@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-
+import {connect} from 'react-redux';
 import {TiSocialFacebook} from 'react-icons/ti'
 
 
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import * as str from '../static/Strings';
-
+import {logoutUser, loginUser} from '../actions/authActions';
 
 
 class AuthButton extends Component {
@@ -23,44 +23,12 @@ class AuthButton extends Component {
     }
 
     handleLoginClick() {
-        auth().signInWithPopup(provider).then((result) => {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            // const token = result.credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-
-            this.props.handleAuthEvent(user);
-
-            let userData = {
-                name: user.displayName,
-                photoUrl: user.photoURL,
-                phone: user.phoneNumber,
-                isAnonymous: user.isAnonymous,
-            };
-            db.toString();
-            console.log(userData);
-
-        }).catch(function (error) {
-            // Handle Errors here.
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
-            // // The email of the user's account used.
-            // const email = error.email;
-            // // The firebase.auth.AuthCredential type that was used.
-            // const credential = error.credential;
-             console.log(error);
-            // console.log([error, errorCode, errorMessage, email, credential]);
-        });
-
-
+        this.props.dispatch(loginUser())
     }
 
     handleLogoutClick() {
-        auth().signOut().then(() => {
-            this.setState({user: null})
-        })
+        this.props.dispatch(logoutUser())
     }
-
 
     render() {
         return (
@@ -73,4 +41,11 @@ class AuthButton extends Component {
     }
 }
 
-export default AuthButton;
+const mapStateToProps = (state) => {
+    return {
+        loading: state.loading,
+        error: state.error,
+    }
+}
+
+export default  connect(mapStateToProps)  (AuthButton);

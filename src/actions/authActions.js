@@ -1,76 +1,120 @@
 import {auth, provider, db} from "../Client.js";
 
-export const FETCH_AUTH_BEGIN = 'FETCH_AUTH_BEGIN';
-export const FETCH_AUTH_SUCCESS = 'FETCH_AUTH_SUCCESS';
-export const FETCH_AUTH_FAILURE = 'FETCH_AUTH_FAILURE';
-export const FETCH_AUTH_NOT_FOUND = 'FETCH_AUTH_NOT_FOUND';
 
-export const SET_AUTH_BEGIN = 'SET_AUTH_BEGIN';
-export const SET_AUTH_SUCCESS = 'SET_AUTH_SUCCESS';
-export const SET_AUTH_FAILURE = 'SET_AUTH_FAILURE';
+export const LOGIN_BEGIN = 'LOGIN_BEGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGIN_NOT_FOUND = 'LOGIN_NOT_FOUND';
+
+export const LOGOUT_BEGIN = 'LOGOUT_BEGIN';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
 
-export function fetchUser(userQuery){
+export function logoutUser() {
+    return dispatch => {
+        dispatch(logoutBegin());
+        auth().signOut().then(() => {
+            dispatch(logoutSuccess())
+        })
 
-  return dispatch => {
-    dispatch(fetchAuthBegin());
-    db.ref('/users/').once('value').then(function(snapshot) {
-        console.log(snapshot);
-    });
-
-  }
+    }
 };
 
-export function setUser(user){
+export function loginUser() {
+    return dispatch => {
+        dispatch(loginBegin());
 
-  return dispatch => {
-    dispatch(setAuthBegin());
-    db.ref('/test/2' ).set({  //2 is set to test
-        test: 'test',
-        name: 1,
-        hello: 'hi'
-    });
+        auth().signInWithPopup(provider).then((result) => {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            // const token = result.credential.accessToken;
+            // The signed-in user info.
+            const userData = result.user;
+            console.log(result);
 
-  }
+            let user = {
+                email: userData.email,
+                name: userData.displayName,
+                photoUrl: userData.photoURL,
+                phone: userData.phoneNumber,
+                isAnonymous: userData.isAnonymous,
+            };
+            let id = result.user.uid;
+            let profileId = result.additionalUserInfo.profile.id;
+
+
+            let path = '/fb'
+            db.ref('/fb/' + id).set(user)
+                .catch((error) => {
+                    console.log(error);
+                    dispatch(loginFailure(error));
+                });
+
+            //Check if user already exists
+            db.ref('/users/' + id).once('value')
+                .then((snapshot) => {
+
+                    //see if it there is a new user
+                    if (snapshot) {
+
+                        //save new user in db
+                        db.ref('/users/' + id).set(user)
+                            .then((user) => {
+                                dispatch(loginSuccess(user))
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                dispatch(loginFailure(error));
+                            });
+                        ;
+                    }else{
+                        dispatch(loginSuccess(user))
+                    }
+                });
+            return userData;
+
+        }).catch(function (error) {
+            // Handle Errors here.
+            // const errorCode = error.code;
+            // const errorMessage = error.message;
+            // // The email of the user's account used.
+            // const email = error.email;
+            // // The firebase.auth.AuthCredential type that was used.
+            // const credential = error.credential;
+            console.log(error);
+            // console.log([error, errorCode, errorMessage, email, credential]);
+            dispatch(loginFailure());
+        });
+
+
+    }
 };
 
-function handleErrors(response){
-  if(!response.ok){
-    throw Error(response.statusText);
-  }
-  return response;
-}
 
-export const fetchAuthBegin = () => ({
-  type: FETCH_AUTH_BEGIN
+export const loginBegin = () => ({
+    type: LOGIN_BEGIN
 });
 
-export const fetchAuthSuccess = user => ({
-  type: FETCH_AUTH_SUCCESS,
-  payload: {user}
+export const loginSuccess = user => ({
+    type: LOGIN_SUCCESS,
+    payload: {user}
 });
 
-export const fetchAuthFailure = error => ({
-  type: FETCH_AUTH_FAILURE,
-  payload: {error}
-});
-
-export const fetchAuthNotFound = error => ({
-  type: FETCH_AUTH_NOT_FOUND,
-  payload: {error}
+export const loginFailure = error => ({
+    type: LOGIN_FAILURE,
+    payload: {error}
 });
 
 
-export const setAuthBegin = () => ({
-  type: SET_AUTH_BEGIN
+export const logoutBegin = () => ({
+    type: LOGOUT_BEGIN
 });
 
-export const setAuthSuccess = user => ({
-  type: SET_AUTH_SUCCESS,
-  payload: {user}
+export const logoutSuccess = () => ({
+    type: LOGOUT_SUCCESS,
 });
 
-export const setAuthFailure = error => ({
-  type: SET_AUTH_FAILURE,
-  payload: {error}
+export const logoutFailure = error => ({
+    type: LOGOUT_FAILURE,
+    payload: {error}
 });

@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import {fetchUser, setUser} from '../actions/authActions.js';
-import {showSnackbar, hideSnackbar} from '../actions/actions.js';
+import {loginUser, logoutUser} from '../actions/authActions.js';
 
 import '../App.css';
 
@@ -16,21 +15,16 @@ import Button from '@material-ui/core/Button';
 class App extends Component {
 
 
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
             <div className="App">
                 <MTP>
                     <div>
-                        {(this.props.user) ?
-                            <Room user={this.props.user}
-                            handleRoomJoin={this.handleRoomJoin}/>
+                        {(this.props.user.email) ?
+                            <Room />
                             :
-                            <IntroCard handleAuthEvent={this.handleAuthEvent}
-                                       isLoggedIn={this.props.user}/>
+                            <IntroCard />
                         }
                         <Button onClick={this.testSend}>send test</Button>
                         <Button onClick={this.testGet}>get test</Button>
@@ -48,7 +42,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({fetchUser, setUser}, dispatch);
+  return bindActionCreators({loginUser, logoutUser}, dispatch);
 }
 
 
