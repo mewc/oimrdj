@@ -4,7 +4,6 @@ import {auth, provider, db} from "../Client.js";
 export const LOGIN_BEGIN = 'LOGIN_BEGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const LOGIN_NOT_FOUND = 'LOGIN_NOT_FOUND';
 
 export const LOGOUT_BEGIN = 'LOGOUT_BEGIN';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
@@ -30,7 +29,6 @@ export function loginUser() {
             // const token = result.credential.accessToken;
             // The signed-in user info.
             const userData = result.user;
-            console.log(result);
 
             let user = {
                 email: userData.email,
@@ -40,37 +38,21 @@ export function loginUser() {
                 isAnonymous: userData.isAnonymous,
             };
             let id = result.user.uid;
-            let profileId = result.additionalUserInfo.profile.id;
 
-
-            let path = '/fb'
-            db.ref('/fb/' + id).set(user)
-                .catch((error) => {
-                    console.log(error);
-                    dispatch(loginFailure(error));
-                });
-
-            //Check if user already exists
-            db.ref('/users/' + id).once('value')
-                .then((snapshot) => {
-
-                    //see if it there is a new user
-                    if (snapshot) {
-
-                        //save new user in db
-                        db.ref('/users/' + id).set(user)
-                            .then((user) => {
-                                dispatch(loginSuccess(user))
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                                dispatch(loginFailure(error));
-                            });
-                        ;
-                    }else{
-                        dispatch(loginSuccess(user))
-                    }
-                });
+            db.ref('/users/').child(id).once('value', function(snapshot) {
+                if(snapshot.exists()){
+                    dispatch(loginSuccess(user))
+                }else {
+                    db.ref('/users/' + id).set(user)
+                        .then((user) => {
+                            dispatch(loginSuccess(user));
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            dispatch(loginFailure(error));
+                        });
+                    ;                }
+            });
             return userData;
 
         }).catch(function (error) {

@@ -24,14 +24,21 @@ class App extends Component {
                         {(this.props.user.email) ?
                             <Room />
                             :
-                            <IntroCard />
+                            <div>
+                                <IntroCard />
+                                <Button disabled={true}>&copy; oimrdj pty ltd</Button>
+                                <Button onClick={this.openMessage}>mail</Button>
+                            </div>
                         }
-                        <Button onClick={this.testSend}>send test</Button>
-                        <Button onClick={this.testGet}>get test</Button>
+
                     </div>
                 </MTP>
             </div>
         );
+    }
+
+    openMessage(){
+        console.log('email info@mewc.info');
     }
 }
 
