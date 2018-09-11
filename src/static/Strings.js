@@ -9,5 +9,7 @@ export const LABEL_LOGOUT = "Logout";
 export const LABEL_CREATEROOM = "Create";
 export const LABEL_JOINROOM = "Join";
 
+export const LABEL_ROOM_CODE_INPUT = "I want to join room...";
+
 export const CREDIT_NAME = "mewc";
 export const CREDIT_LINK = "http://mewc.info/";

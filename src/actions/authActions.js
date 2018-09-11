@@ -40,6 +40,7 @@ export function loginUser() {
                         photoUrl: userData.photoURL,
                         phone: userData.phoneNumber,
                         isAnonymous: userData.isAnonymous,
+                        token: userData.refreshToken
                     };
                     let id = result.user.uid;
 

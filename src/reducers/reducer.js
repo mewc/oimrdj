@@ -20,6 +20,8 @@ let defaultState = {
     error: null,
     notification: false,
     user: defaultUser,
+    room: null,
+    requests: null,
 };
 
 
