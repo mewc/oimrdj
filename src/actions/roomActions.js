@@ -20,7 +20,6 @@ const DEFAULT_ROOM = {
     code: null,
     isProtected: false,
     name: 'default',
-    owner: {1:true},
     timeout: 2000,
 }
 
@@ -72,10 +71,10 @@ export function findRoom(code) {
                 let newRoom = DEFAULT_ROOM;
                 newRoom.code = code;
                 newRoom.name = code;
-                newRoom.owner = auth().currentUser.uid;
+                newRoom.owner[auth().currentUser.uid] = true;
                 console.log(newRoom);
 
-                db.ref('/room/' + code).set(newRoom)
+                db.ref('/rooms/' + code).set(newRoom)
                     .then((user) => {
                         dispatch(createRoomSuccess(user));
                     })
