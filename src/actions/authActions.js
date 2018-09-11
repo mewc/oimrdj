@@ -48,6 +48,7 @@ export function loginUser() {
                         if(snapshot.exists()){
                             dispatch(loginSuccess(user))
                         }else {
+                            //CREATE new user if not in system
                             db.ref('/users/' + id).set(user)
                                 .then((user) => {
                                     dispatch(loginSuccess(user));
@@ -72,7 +73,8 @@ export function loginUser() {
 
 
 export const loginBegin = () => ({
-    type: LOGIN_BEGIN
+    type: LOGIN_BEGIN,
+    payload: {message: 'Logging in'}
 });
 
 export const loginSuccess = user => ({
@@ -87,7 +89,8 @@ export const loginFailure = error => ({
 
 
 export const logoutBegin = () => ({
-    type: LOGOUT_BEGIN
+    type: LOGOUT_BEGIN,
+    payload: {message: 'Logging out'}
 });
 
 export const logoutSuccess = () => ({

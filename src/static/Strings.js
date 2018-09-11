@@ -1,4 +1,4 @@
-export const APP_NAME = "OI MR DJ";
+export const APP_NAME = "| OI MR DJ |";
 export const APP_BIO_VARIANTS = [
   "Dancefloors aren't complete until you get Mr. DJ to play your jam",
   "Great nights on the dancefloor when  Mr. DJ plays your jam"

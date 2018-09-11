@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
-import {auth, provider, db} from "../Client.js";
+import {auth } from "../Client.js";
 
 import '../App.css';
 
@@ -9,18 +9,22 @@ import IntroCard from './IntroCard';
 import Room from './Room';
 
 import {Text} from '@blueprintjs/core';
-import {logoutUser, loginUser} from '../actions/authActions';
+import {loginUser} from '../actions/authActions';
 
 
 class App extends Component {
 
-        constructor(props){
-            super(props);
-            auth().onAuthStateChanged((user) => {
-                this.props.dispatch(loginUser(user));
-                //TODO remove this for poroduction
-            });
-        }
+    constructor(props){
+        super(props);
+        auth().onAuthStateChanged((user) => {
+            this.props.dispatch(loginUser(user));
+            //TODO remove this for poroduction
+        });
+    }
+
+    componentDidMount(){
+        document.title = this.props.title + ' ' + this.props.message;
+    }
 
     render() {
         return (
@@ -46,9 +50,11 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  }
+    return {
+        user: state.user,
+        title: state.title,
+        message: state.message,
+    }
 }
 
 

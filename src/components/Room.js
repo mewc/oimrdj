@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import Button from '@material-ui/core/Button';
@@ -13,19 +12,9 @@ import * as str from "../static/Strings";
 
 import {findRoom} from "../actions/roomActions";
 
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    }
-});
 
-const roomCodeLength = 6;
+
+const roomCodeLength = 6; //7 characters
 
 class Room extends Component {
 
@@ -52,8 +41,8 @@ class Room extends Component {
 
     render() {
 
-        let loadingSearchButton = <Button variant="fab" disabled={this.state.submitDisabled}>
-            <SendIcon />
+        let loadingSearchButton = <Button  variant="fab" disabled={this.state.submitDisabled}>
+            <SendIcon onClick={this.handleSearchClick} />
             </Button>
 
         if(this.props.loading){
@@ -69,10 +58,9 @@ class Room extends Component {
                             shrink: true,
                         }}
                         placeholder=""
-                        helperText=""
+                        helperText={this.state.errorText}
                         // fullWidth
                         margin="normal"
-                        errorText={this.state.errorText}
                         onChange={this.onInputChange.bind(this)}
                     />
                     {loadingSearchButton}
