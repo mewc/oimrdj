@@ -52,18 +52,25 @@ class Room extends Component {
         return (
             <div>
                 <div>
-                    <TextField
-                        label={str.LABEL_ROOM_CODE_INPUT}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        placeholder=""
-                        helperText={this.state.errorText}
-                        // fullWidth
-                        margin="normal"
-                        onChange={this.onInputChange.bind(this)}
-                    />
-                    {loadingSearchButton}
+                    {(this.props.room) ?
+                        <p>Welcome to room: {this.props.room.name}</p>
+                        :
+                        <React.Fragment>
+                            <TextField
+                                label={str.LABEL_ROOM_CODE_INPUT}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                placeholder=""
+                                helperText={this.state.errorText}
+                                // fullWidth
+                                margin="normal"
+                                onChange={this.onInputChange.bind(this)}
+                            />
+                            {loadingSearchButton}
+                        </React.Fragment>
+
+                    }
                     <Snackbar />
                 </div>
             </div>

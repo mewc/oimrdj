@@ -110,7 +110,7 @@ export default function reducer(state = defaultState, action){
             ...state,
             loading: false,
             error: null,
-            room: true,
+            room: null,
             message: 'Entering room...'
         };
     default:
