@@ -12,7 +12,8 @@ import {
     ENTER_ROOM_SUCCESS,
     ENTER_ROOM_BEGIN,
     EXIT_ROOM_BEGIN,
-    FIND_ROOM_SUCCESS
+    FIND_ROOM_SUCCESS,
+    CREATE_ROOM_SUCCESS
 } from "../actions/roomActions";
 
 let defaultUser = {
@@ -88,7 +89,6 @@ export default function reducer(state = defaultState, action){
         message: '',
         };
     case ENTER_ROOM_SUCCESS:
-        console.log(action.payload.room);
     return {
         ...state,
         loading: false,
@@ -105,6 +105,7 @@ export default function reducer(state = defaultState, action){
             message: '',
         };
     case FIND_ROOM_SUCCESS:
+    case CREATE_ROOM_SUCCESS:
         return {
             ...state,
             loading: false,

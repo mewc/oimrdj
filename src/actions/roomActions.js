@@ -41,31 +41,10 @@ export function findRoom(code) {
             console.log(snapshot.exists());
             let room = snapshot.val();
 
-            if(snapshot.exists()){
-                console.log("Room exists, joining...");
-                dispatch(findRoomSuccess());
-
-                //Room exists, join
-                dispatch(enterRoomBegin());
-                console.log(room);
-                //add userId to participant list (doesnt matter if they already exist)
-                db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
-                    .set(true)
-                    .then((room) => {
-                        dispatch(enterRoomSuccess(room));
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        dispatch(enterRoomFailure(error));
-                    });
-                ;
-
-
-            }else {
+            if(!snapshot.exists()){
                 console.log("Room code not found, creating");
 
-               //Need to get user to confirm this ----
-               //Room doesnt exist, create
+                //Need to get user to confirm this ----
                 dispatch(createRoomBegin());
 
                 let newRoom = DEFAULT_ROOM;
@@ -75,15 +54,38 @@ export function findRoom(code) {
                 console.log(newRoom);
 
                 db.ref('/rooms/' + code).set(newRoom)
-                    .then((user) => {
-                        dispatch(createRoomSuccess(user));
+                    .then((newRoom) => {
+                        room = newRoom;
+                        dispatch(createRoomSuccess());
                     })
                     .catch((error) => {
                         console.log(error);
                         dispatch(createRoomFailure(error));
                     });
                 ;
-          }
+
+            }else {
+                console.log("Room exists, joining...");
+                dispatch(findRoomSuccess());
+
+            }
+
+
+            //Join Room
+            dispatch(enterRoomBegin());
+            console.log(room);
+            //add userId to participant list (doesnt matter if they already exist)
+            db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
+                .set(true)
+                .then(() => {
+                    dispatch(enterRoomSuccess(room));
+                })
+                .catch((error) => {
+                    console.log(error);
+                    dispatch(enterRoomFailure(error));
+                });
+            ;
+
         });
     }
 }
@@ -146,9 +148,8 @@ export const createRoomBegin = () => ({
     payload: {message: 'Creating your Room'}
 });
 
-export const createRoomSuccess = room => ({
+export const createRoomSuccess = () => ({
     type: CREATE_ROOM_SUCCESS,
-    payload: {room}
 });
 
 export const createRoomFailure = error => ({
