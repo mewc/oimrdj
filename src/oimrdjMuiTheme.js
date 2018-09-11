@@ -5,6 +5,9 @@ import {grey50, grey200, grey300, grey900,
 import {fade} from 'material-ui/utils/colorManipulator';
 import spacing from 'material-ui/styles/spacing';
 
+import { createMuiTheme } from '@material-ui/core/styles';
+
+
 export default {
     spacing: spacing,
     fontFamily: 'Josefin Sans, Roboto, sans-serif', //fetched from script in index.html

@@ -1,38 +1,41 @@
 import React, {Component} from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import {loginUser, logoutUser} from '../actions/authActions.js';
+import {auth, provider, db} from "../Client.js";
 
 import '../App.css';
 
 import IntroCard from './IntroCard';
 import Room from './Room';
-import MTP from 'material-ui/styles/MuiThemeProvider';
-import Button from '@material-ui/core/Button';
+
+import {Text} from '@blueprintjs/core';
+import {logoutUser, loginUser} from '../actions/authActions';
 
 
 class App extends Component {
 
-
+        constructor(props){
+            super(props);
+            auth().onAuthStateChanged((user) => {
+                this.props.dispatch(loginUser(user));
+                //TODO remove this for poroduction
+            });
+        }
 
     render() {
         return (
             <div className="App">
-                <MTP>
                     <div>
                         {(this.props.user.email) ?
                             <Room />
                             :
                             <div>
                                 <IntroCard />
-                                <Button disabled={true}>&copy; oimrdj pty ltd</Button>
-                                <Button onClick={this.openMessage}>mail</Button>
+                                <Text className={'p'} >&copy; oimrdj pty ltd</Text>
                             </div>
                         }
 
                     </div>
-                </MTP>
             </div>
         );
     }
@@ -48,9 +51,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({loginUser, logoutUser}, dispatch);
-}
 
-
-export default connect(mapStateToProps, mapDispatchToProps) (App);
+export default connect(mapStateToProps) (App);

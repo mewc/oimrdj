@@ -13,9 +13,10 @@ export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 export function logoutUser() {
     return dispatch => {
         dispatch(logoutBegin());
+
         auth().signOut().then(() => {
             dispatch(logoutSuccess())
-        })
+        });
 
     }
 };
@@ -24,51 +25,47 @@ export function loginUser() {
     return dispatch => {
         dispatch(loginBegin());
 
-        auth().signInWithPopup(provider).then((result) => {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            // const token = result.credential.accessToken;
-            // The signed-in user info.
-            const userData = result.user;
+        auth().setPersistence(auth.Auth.Persistence.LOCAL)
+            .then(() => {
 
-            let user = {
-                email: userData.email,
-                name: userData.displayName,
-                photoUrl: userData.photoURL,
-                phone: userData.phoneNumber,
-                isAnonymous: userData.isAnonymous,
-            };
-            let id = result.user.uid;
+                auth().signInWithPopup(provider).then((result) => {
+                    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                    // const token = result.credential.accessToken;
+                    // The signed-in user info.
+                    const userData = result.user;
 
-            db.ref('/users/').child(id).once('value', function(snapshot) {
-                if(snapshot.exists()){
-                    dispatch(loginSuccess(user))
-                }else {
-                    db.ref('/users/' + id).set(user)
-                        .then((user) => {
-                            dispatch(loginSuccess(user));
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            dispatch(loginFailure(error));
-                        });
-                    ;                }
-            });
-            return userData;
+                    let user = {
+                        email: userData.email,
+                        name: userData.displayName,
+                        photoUrl: userData.photoURL,
+                        phone: userData.phoneNumber,
+                        isAnonymous: userData.isAnonymous,
+                    };
+                    let id = result.user.uid;
 
-        }).catch(function (error) {
-            // Handle Errors here.
-            // const errorCode = error.code;
-            // const errorMessage = error.message;
-            // // The email of the user's account used.
-            // const email = error.email;
-            // // The firebase.auth.AuthCredential type that was used.
-            // const credential = error.credential;
-            console.log(error);
-            // console.log([error, errorCode, errorMessage, email, credential]);
-            dispatch(loginFailure());
-        });
+                    db.ref('/users/').child(id).once('value', function(snapshot) {
+                        if(snapshot.exists()){
+                            dispatch(loginSuccess(user))
+                        }else {
+                            db.ref('/users/' + id).set(user)
+                                .then((user) => {
+                                    dispatch(loginSuccess(user));
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    dispatch(loginFailure(error));
+                                });
+                            ;                }
+                    });
+                    return userData;
+
+                }).catch(function (error) {
+                    console.log(error);
+                    dispatch(loginFailure(error.message));
+                });
 
 
+            })
     }
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import { connect } from 'react-redux';
-import {showNotification, hideNotification} from '../actions/actions.js';
+import {showSnackbar, hideSnackbar} from '../actions/actions.js';
 
 class ErrorSnackbar extends React.Component{
 
@@ -15,11 +15,11 @@ class ErrorSnackbar extends React.Component{
 
   handleSnackbarTrigger = (error) => {
       let message = 'Search error - ' + error.message;
-      this.props.dispatch(showNotification(message));
+      this.props.dispatch(showSnackbar(message));
   }
 
   handleRequestClose = () => {
-      this.props.dispatch(hideNotification());
+      this.props.dispatch(hideSnackbar());
   }
 
 
