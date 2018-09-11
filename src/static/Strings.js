@@ -1,6 +1,8 @@
 export const APP_NAME = "OI MR DJ";
-export const APP_BIO = "Dancefloors aren't complete until you get Mr. DJ to play your jam";
-export const APP_BIO2 = "Great nights on the dancefloor when  Mr. DJ plays your jam";
+export const APP_BIO_VARIANTS = [
+  "Dancefloors aren't complete until you get Mr. DJ to play your jam",
+  "Great nights on the dancefloor when  Mr. DJ plays your jam"
+];
 
 export const LABEL_LOGIN = "Start";
 export const LABEL_LOGOUT = "Logout";
