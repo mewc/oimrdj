@@ -9,6 +9,7 @@ import Search from './Search';
 import Admin from './Admin';
 import History from './History';
 import Saved from './Saved';
+import Profile from "./Profile";
 
 
 class Room extends Component {
@@ -36,6 +37,8 @@ class Room extends Component {
                 return <History/>;
             case s.TAB_SAVED:
                 return <Saved/>;
+            case s.TAB_PROFILE:
+                return <Profile/>
             default:
                 return  <Search/>;
         }

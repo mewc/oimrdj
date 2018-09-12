@@ -8,6 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SavedIcon from '@material-ui/icons/Stars';
 import HistoryIcon from '@material-ui/icons/History';
 import AdminIcon from '@material-ui/icons/VpnKey';
+import PersonIcon from '@material-ui/icons/Person';
 
 import {switchTab} from "../../actions/roomActions";
 import * as s from '../../static/Strings';
@@ -44,7 +45,7 @@ class RoomBottomNav extends React.Component {
                 {(this.props.isAdmin)?
                     <BottomNavigationAction label="Admin" value={s.TAB_ADMIN} icon={<AdminIcon />} />
                     :
-                    ''
+                    <BottomNavigationAction label="Profile" value={s.TAB_PROFILE} icon={<PersonIcon />} />
                 }
 
             </BottomNavigation>

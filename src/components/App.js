@@ -25,12 +25,8 @@ class App extends Component {
         });
     }
 
-    componentDidMount(){
-        document.title = this.props.title + ' ' + this.props.message;
-    }
-
     render() {
-
+        document.title = this.props.title + ' ' + this.props.message;
         return (
             <div className="App">
                     <div>

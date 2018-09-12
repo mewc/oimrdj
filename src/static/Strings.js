@@ -15,6 +15,7 @@ export const TAB_SEARCH = "search";
 export const TAB_SAVED = "saved";
 export const TAB_HISTORY = "history";
 export const TAB_ADMIN = "admin";
+export const TAB_PROFILE = "profile";
 
 export const CREDIT_NAME = "mewc";
 export const CREDIT_LINK = "http://mewc.info/";

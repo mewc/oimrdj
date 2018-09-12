@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 
 
 class Admin extends React.Component {
-
+    //admin has admin controls + all profile stuff too
     render() {
 
 
