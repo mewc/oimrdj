@@ -21,7 +21,7 @@ class Profile extends React.Component {
     render() {
 
         return <React.Fragment>
-            <p>Profile</p>
+            <h2>Profile</h2>
             <LeaveRoomButton/>
             <LogoutButton/>
         </React.Fragment>

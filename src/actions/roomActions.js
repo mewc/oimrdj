@@ -38,11 +38,8 @@ export function exitRoom(code) {
 export function findRoom(code) {
     return dispatch => {
         dispatch(findRoomBegin());
-        console.log(code);
         //if room
         db.ref('/rooms/').child(code).once('value', function (snapshot) {
-            console.log(snapshot.key);
-            console.log(snapshot.exists());
             let room = snapshot.val();
 
             if (!snapshot.exists()) {
@@ -61,7 +58,6 @@ export function findRoom(code) {
 
                         //Join Room
                         dispatch(enterRoomBegin());
-                        console.log(newRoom);
                         //add userId to participant list (doesnt matter if they already exist)
                         db.ref('/rooms/' + newRoom.code + /participants/ + auth().currentUser.uid)
                             .set(true)
@@ -69,18 +65,14 @@ export function findRoom(code) {
                                 dispatch(enterRoomSuccess(newRoom));
                             })
                             .catch((error) => {
-                                console.log(error);
                                 dispatch(enterRoomFailure(error));
                             });
 
                     })
                     .catch((error) => {
-                        console.log(error);
                         dispatch(createRoomFailure(error));
                     });
                 ;
-
-
             } else {
                 console.log("Room exists, joining...");
                 dispatch(findRoomSuccess());
@@ -184,6 +176,42 @@ export function switchTab(roomTab) {
 export const switchTabSuccess = roomTab => ({
     type: SWITCH_TAB,
     payload: {roomTab: roomTab, message: roomTab}
+});
+
+
+
+export const CHANGE_ROOM_NAME_SUCCESS = 'CHANGE_ROOM_NAME_SUCCESS';
+export const CHANGE_ROOM_NAME_BEGIN = 'CHANGE_ROOM_NAME_BEGIN';
+export const CHANGE_ROOM_NAME_FAILURE = 'CHANGE_ROOM_NAME_FAILURE';
+
+
+export function changeRoomName(name, code) {
+    return dispatch => {
+        dispatch(changeRoomNameBegin());
+        db.ref('/rooms/' + code + /name/)
+            .set(name)
+            .then(() => {
+                dispatch(changeRoomNameSuccess(name));
+            })
+            .catch((error) => {
+                dispatch(changeRoomNameFailure(error));
+            });
+    }
+};
+
+export const changeRoomNameBegin = () => ({
+    type: CHANGE_ROOM_NAME_BEGIN,
+    payload: {message: 'Changing room name'}
+});
+
+export const changeRoomNameSuccess = name => ({
+    type: CHANGE_ROOM_NAME_SUCCESS,
+    payload: {newName: name}
+});
+
+export const changeRoomNameFailure = error => ({
+    type: CHANGE_ROOM_NAME_FAILURE,
+    payload: {error},
 });
 
 

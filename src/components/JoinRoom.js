@@ -61,6 +61,11 @@ class JoinRoom extends Component {
                     // fullWidth
                     margin="normal"
                     onChange={this.onInputChange.bind(this)}
+                    onKeyPress={(event) => {
+                        if(event.key === 'Enter'){
+                            this.handleSearchClick()
+                        }
+                    }}
                 />
                 {loadingSearchButton}
                 <LogoutButton/>
