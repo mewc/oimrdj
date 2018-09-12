@@ -1,29 +1,28 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import Button from '@material-ui/core/Button';
-import SendIcon from '@material-ui/icons/Send';
-
-import TextField from '@material-ui/core/TextField';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import Snackbar from './Snackbar';
 import * as str from "../static/Strings";
 
 import {findRoom} from "../actions/roomActions";
+import TextField from "@material-ui/core/TextField/TextField";
+import Button from "@material-ui/core/Button/Button";
+import SendIcon from "@material-ui/icons/Send";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 
 
 const roomCodeLength = 6; //7 characters
 
-class Room extends Component {
+class JoinRoom extends Component {
 
     constructor(props){
         super(props);
+
         this.state = {
             errorText: '',
             searchValue: '',
             submitDisabled: true,
+            isAdmin: true,
         };
     }
 
@@ -43,37 +42,27 @@ class Room extends Component {
 
         let loadingSearchButton = <Button  variant="fab" disabled={this.state.submitDisabled}>
             <SendIcon onClick={this.handleSearchClick} />
-            </Button>
+        </Button>
 
         if(this.props.loading){
             loadingSearchButton = <CircularProgress thickness={3}/>
         }
 
         return (
-            <div>
-                <div>
-                    {(this.props.room) ?
-                        <p>Welcome to room: {this.props.room.name}</p>
-                        :
-                        <React.Fragment>
-                            <TextField
-                                label={str.LABEL_ROOM_CODE_INPUT}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                placeholder=""
-                                helperText={this.state.errorText}
-                                // fullWidth
-                                margin="normal"
-                                onChange={this.onInputChange.bind(this)}
-                            />
-                            {loadingSearchButton}
-                        </React.Fragment>
-
-                    }
-                    <Snackbar />
-                </div>
-            </div>
+            <React.Fragment>
+                <TextField
+                    label={str.LABEL_ROOM_CODE_INPUT}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    placeholder=""
+                    helperText={this.state.errorText}
+                    // fullWidth
+                    margin="normal"
+                    onChange={this.onInputChange.bind(this)}
+                />
+                {loadingSearchButton}
+            </React.Fragment>
         );
 
     }
@@ -91,5 +80,5 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps)(Room);
+export default connect(mapStateToProps)(JoinRoom);
 

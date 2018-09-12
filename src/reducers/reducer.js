@@ -13,7 +13,7 @@ import {
     ENTER_ROOM_BEGIN,
     EXIT_ROOM_BEGIN,
     FIND_ROOM_SUCCESS,
-    CREATE_ROOM_SUCCESS
+    CREATE_ROOM_SUCCESS, SWITCH_TAB
 } from "../actions/roomActions";
 
 let defaultUser = {
@@ -37,6 +37,7 @@ let defaultState = {
     room: null,
     requests: null,
     message: '', //this shows in title or state updates
+    roomTab: 'search', //defaults so bottom nav shows search tab first
 };
 
 
@@ -113,6 +114,11 @@ export default function reducer(state = defaultState, action){
             room: null,
             message: 'Entering room...'
         };
+    case SWITCH_TAB:
+        return {
+            ...state,
+            roomTab: action.payload.roomTab,
+        }
     default:
     return state;
     }

@@ -21,6 +21,7 @@ const DEFAULT_ROOM = {
     isProtected: false,
     name: 'default',
     timeout: 2000,
+    owner: {},
 }
 
 export function exitRoom() {
@@ -36,7 +37,6 @@ export function findRoom(code) {
         console.log(code);
         //if room
         db.ref('/rooms/').child(code).once('value', function(snapshot) {
-            console.log(snapshot.val());
             console.log(snapshot.key);
             console.log(snapshot.exists());
             let room = snapshot.val();
@@ -46,7 +46,7 @@ export function findRoom(code) {
 
                 //Need to get user to confirm this ----
                 dispatch(createRoomBegin());
-
+                console.log(auth());
                 let newRoom = DEFAULT_ROOM;
                 newRoom.code = code;
                 newRoom.name = code;
@@ -54,15 +54,17 @@ export function findRoom(code) {
                 console.log(newRoom);
 
                 db.ref('/rooms/' + code).set(newRoom)
-                    .then((newRoom) => {
+                    .then((result) => {
                         room = newRoom;
                         dispatch(createRoomSuccess());
+                        console.log(result);
                     })
                     .catch((error) => {
                         console.log(error);
                         dispatch(createRoomFailure(error));
                     });
                 ;
+
 
             }else {
                 console.log("Room exists, joining...");
@@ -156,6 +158,22 @@ export const createRoomFailure = error => ({
     type: CREATE_ROOM_FAILURE,
     payload: {error}
 });
+
+
+export const SWITCH_TAB = 'SWITCH_TAB';
+
+
+export function switchTab(roomTab) {
+    return dispatch => {
+        dispatch(switchTabSuccess(roomTab));
+    }
+};
+
+export const switchTabSuccess = roomTab => ({
+    type: SWITCH_TAB,
+    payload: {roomTab: roomTab}
+});
+
 
 
 

@@ -13,3 +13,4 @@ export const LABEL_ROOM_CODE_INPUT = "I want to join room...";
 
 export const CREDIT_NAME = "mewc";
 export const CREDIT_LINK = "http://mewc.info/";
+export const FOOTER_COPYRIGHT = "oimrdj pty ltd";
