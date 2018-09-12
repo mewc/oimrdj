@@ -11,7 +11,7 @@ class LeaveRoomButton extends React.Component {
 
 
     handleLeaveRoomClick(){
-        this.props.dispatch(exitRoom())
+        this.props.dispatch(exitRoom(this.props.room.code))
     }
 
 

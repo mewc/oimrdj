@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 import Button from "@material-ui/core/Button/Button";
 import SendIcon from "@material-ui/icons/Send";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import LogoutButton from "./LogoutButton";
 
 
 
@@ -62,6 +63,7 @@ class JoinRoom extends Component {
                     onChange={this.onInputChange.bind(this)}
                 />
                 {loadingSearchButton}
+                <LogoutButton/>
             </React.Fragment>
         );
 

@@ -24,10 +24,14 @@ const DEFAULT_ROOM = {
     owner: {},
 }
 
-export function exitRoom() {
+export function exitRoom(code) {
     return dispatch => {
         dispatch(exitRoomBegin());
-        dispatch(exitRoomSuccess())
+
+        let uid = auth().currentUser.uid;
+        db.ref('rooms/' + code + '/participants/').update({[uid]: false});
+
+        dispatch(exitRoomSuccess());
     }
 };
 
@@ -36,12 +40,12 @@ export function findRoom(code) {
         dispatch(findRoomBegin());
         console.log(code);
         //if room
-        db.ref('/rooms/').child(code).once('value', function(snapshot) {
+        db.ref('/rooms/').child(code).once('value', function (snapshot) {
             console.log(snapshot.key);
             console.log(snapshot.exists());
             let room = snapshot.val();
 
-            if(!snapshot.exists()){
+            if (!snapshot.exists()) {
                 console.log("Room code not found, creating");
 
                 //Need to get user to confirm this ----
@@ -66,7 +70,7 @@ export function findRoom(code) {
                 ;
 
 
-            }else {
+            } else {
                 console.log("Room exists, joining...");
                 dispatch(findRoomSuccess());
 
@@ -80,7 +84,9 @@ export function findRoom(code) {
             db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
                 .set(true)
                 .then(() => {
-                    dispatch(enterRoomSuccess(room));
+
+                            dispatch(enterRoomSuccess(room));
+
                 })
                 .catch((error) => {
                     console.log(error);
@@ -108,8 +114,6 @@ export const findRoomFailure = error => ({
 });
 
 
-
-
 export const enterRoomBegin = () => ({
     type: ENTER_ROOM_BEGIN,
     payload: {message: 'Entering Room'}
@@ -126,8 +130,6 @@ export const enterRoomFailure = error => ({
 });
 
 
-
-
 export const exitRoomBegin = () => ({
     type: EXIT_ROOM_BEGIN,
     payload: {message: 'Exiting Room'}
@@ -142,7 +144,6 @@ export const exitRoomFailure = error => ({
     type: EXIT_ROOM_FAILURE,
     payload: {error}
 });
-
 
 
 export const createRoomBegin = () => ({
@@ -171,7 +172,7 @@ export function switchTab(roomTab) {
 
 export const switchTabSuccess = roomTab => ({
     type: SWITCH_TAB,
-    payload: {roomTab: roomTab}
+    payload: {roomTab: roomTab, message: roomTab}
 });
 
 

@@ -118,6 +118,7 @@ export default function reducer(state = defaultState, action){
         return {
             ...state,
             roomTab: action.payload.roomTab,
+            message: action.payload.message,
         }
     default:
     return state;
