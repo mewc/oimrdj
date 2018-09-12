@@ -11,6 +11,11 @@ export const LABEL_JOINROOM = "Join";
 
 export const LABEL_ROOM_CODE_INPUT = "I want to join room...";
 
+export const TAB_SEARCH = "search";
+export const TAB_SAVED = "saved";
+export const TAB_HISTORY = "history";
+export const TAB_ADMIN = "admin";
+
 export const CREDIT_NAME = "mewc";
 export const CREDIT_LINK = "http://mewc.info/";
 export const FOOTER_COPYRIGHT = "oimrdj pty ltd";

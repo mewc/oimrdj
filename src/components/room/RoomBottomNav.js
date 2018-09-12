@@ -10,6 +10,7 @@ import HistoryIcon from '@material-ui/icons/History';
 import AdminIcon from '@material-ui/icons/VpnKey';
 
 import {switchTab} from "../../actions/roomActions";
+import * as s from '../../static/Strings';
 
 
 const styles = {
@@ -37,10 +38,15 @@ class RoomBottomNav extends React.Component {
 
         return (
             <BottomNavigation value={this.props.roomTab} onChange={this.handleChange} style={styles.BottomNav}>
-                <BottomNavigationAction label="Search" value="search" icon={<SearchIcon />} />
-                <BottomNavigationAction label="Saved" value="saved" icon={<SavedIcon />} />
-                <BottomNavigationAction label="History" value="history" icon={<HistoryIcon />} />
-                <BottomNavigationAction label="Admin" value="admin" icon={<AdminIcon />} />
+                <BottomNavigationAction label="Search" value={s.TAB_SEARCH} icon={<SearchIcon />} />
+                <BottomNavigationAction label="Saved" value={s.TAB_SAVED} icon={<SavedIcon />} />
+                <BottomNavigationAction label="History" value={s.TAB_HISTORY} icon={<HistoryIcon />} />
+                {(this.props.isAdmin)?
+                    <BottomNavigationAction label="Admin" value={s.TAB_ADMIN} icon={<AdminIcon />} />
+                    :
+                    ''
+                }
+
             </BottomNavigation>
         );
     }

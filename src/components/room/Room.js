@@ -2,42 +2,56 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {auth} from "../../Client.js";
 
-// import * as str from "../../static/Strings";
+import * as s from "../../static/Strings";
 
-import {findRoom} from "../../actions/roomActions";
 import RoomBottomNav from './RoomBottomNav';
+import Search from './Search';
+import Admin from './Admin';
+import History from './History';
+import Saved from './Saved';
 
-
-const roomCodeLength = 6; //7 characters
 
 class Room extends Component {
 
     constructor(props){
         super(props);
+
+        //check if admin
+        let isAdmin = false;
         if(this.props.room.owner[auth().currentUser.uid]){
             console.log('user is admin');
-            this.state = {
-                ...this.state,
-                isAdmin: true
-            }
+            isAdmin= true;
         }
+        this.state = {
+            isAdmin: isAdmin
+        };
     }
 
+
+    tabRender(name){
+        switch(this.props.roomTab){
+            case s.TAB_ADMIN:
+                return <Admin/>;
+            case s.TAB_HISTORY:
+                return <History/>;
+            case s.TAB_SAVED:
+                return <Saved/>;
+            default:
+                return  <Search/>;
+        }
+    }
 
     render() {
         return (
             <div>
                 <div>
                     <p>Welcome to room: {this.props.room.name}</p>
-                    
-                    <RoomBottomNav/>
+                    {this.tabRender(this.props.roomTab)}
+                    <RoomBottomNav isAdmin={this.state.isAdmin}/>
                 </div>
             </div>
         );
-
     }
-
-
 }
 
 const mapStateToProps = (state) => {
@@ -46,6 +60,7 @@ const mapStateToProps = (state) => {
         room: state.room,
         requests: state.requests,
         loading: state.loading,
+        roomTab: state.roomTab,
     }
 }
 
