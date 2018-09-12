@@ -50,18 +50,29 @@ export function findRoom(code) {
 
                 //Need to get user to confirm this ----
                 dispatch(createRoomBegin());
-                console.log(auth());
                 let newRoom = DEFAULT_ROOM;
                 newRoom.code = code;
                 newRoom.name = code;
                 newRoom.owner[auth().currentUser.uid] = true;
-                console.log(newRoom);
-
                 db.ref('/rooms/' + code).set(newRoom)
                     .then((result) => {
-                        room = newRoom;
                         dispatch(createRoomSuccess());
-                        console.log(result);
+
+
+                        //Join Room
+                        dispatch(enterRoomBegin());
+                        console.log(newRoom);
+                        //add userId to participant list (doesnt matter if they already exist)
+                        db.ref('/rooms/' + newRoom.code + /participants/ + auth().currentUser.uid)
+                            .set(true)
+                            .then(() => {
+                                dispatch(enterRoomSuccess(newRoom));
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                dispatch(enterRoomFailure(error));
+                            });
+
                     })
                     .catch((error) => {
                         console.log(error);
@@ -74,25 +85,25 @@ export function findRoom(code) {
                 console.log("Room exists, joining...");
                 dispatch(findRoomSuccess());
 
+
+
+                //Join Room (same as code about - how to extract?!
+                dispatch(enterRoomBegin());
+                console.log(room);
+                //add userId to participant list (doesnt matter if they already exist)
+                db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
+                    .set(true)
+                    .then(() => {
+
+                        dispatch(enterRoomSuccess(room));
+
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        dispatch(enterRoomFailure(error));
+                    });
+
             }
-
-
-            //Join Room
-            dispatch(enterRoomBegin());
-            console.log(room);
-            //add userId to participant list (doesnt matter if they already exist)
-            db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
-                .set(true)
-                .then(() => {
-
-                            dispatch(enterRoomSuccess(room));
-
-                })
-                .catch((error) => {
-                    console.log(error);
-                    dispatch(enterRoomFailure(error));
-                });
-            ;
 
         });
     }

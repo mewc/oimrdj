@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Profile from "./Profile";
 
 
 
@@ -9,7 +10,7 @@ class Admin extends React.Component {
     render() {
 
 
-        return <p>Admin</p>;
+        return <React.Fragment> <p>Admin</p> <Profile/> </React.Fragment>;
     }
 }
 
