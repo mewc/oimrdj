@@ -1,5 +1,6 @@
 import {auth, provider, db} from "../Client.js";
 
+import {exitRoom} from "./roomActions";
 
 export const LOGIN_BEGIN = 'LOGIN_BEGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -14,9 +15,16 @@ export function logoutUser() {
     return dispatch => {
         dispatch(logoutBegin());
 
-        auth().signOut().then(() => {
-            dispatch(logoutSuccess())
+        dispatch(exitRoom());
+
+        auth().signOut()
+        .then(() => {
+            dispatch(logoutSuccess());
+        })
+        .catch((error) => {
+            dispatch(logoutFailure(error.message));
         });
+
 
     }
 };
@@ -44,10 +52,10 @@ export function loginUser() {
                     };
                     let id = result.user.uid;
 
-                    db.ref('/users/').child(id).once('value', function(snapshot) {
-                        if(snapshot.exists()){
+                    db.ref('/users/').child(id).once('value', function (snapshot) {
+                        if (snapshot.exists()) {
                             dispatch(loginSuccess(user))
-                        }else {
+                        } else {
                             //CREATE new user if not in system
                             db.ref('/users/' + id).set(user)
                                 .then((user) => {
@@ -57,7 +65,8 @@ export function loginUser() {
                                     console.log(error);
                                     dispatch(loginFailure(error));
                                 });
-                            ;                }
+                            ;
+                        }
                     });
                     return userData;
 

@@ -5,11 +5,14 @@ import {auth } from "../Client.js";
 
 import '../App.css';
 
-import IntroCard from './IntroCard';
-import Room from './Room';
+import Room from './room/Room';
+import JoinRoom from './JoinRoom';
+import Start from './Start';
 
-import {Text} from '@blueprintjs/core';
 import {loginUser} from '../actions/authActions';
+import Snackbar from "./Snackbar";
+
+
 
 
 class App extends Component {
@@ -22,24 +25,21 @@ class App extends Component {
         });
     }
 
-    componentDidMount(){
-        document.title = this.props.title + ' ' + this.props.message;
-    }
-
     render() {
+        document.title = this.props.title + ' ' + this.props.message;
         return (
             <div className="App">
                     <div>
                         {(this.props.user.email) ?
-                            <Room />
+                            (this.props.room) ?
+                                <Room/>
+                                :
+                                <JoinRoom/>
                             :
-                            <div>
-                                <IntroCard />
-                                <Text className={'p'} >&copy; oimrdj pty ltd</Text>
-                            </div>
+                            <Start/>
                         }
-
                     </div>
+                <Snackbar />
             </div>
         );
     }
@@ -54,6 +54,7 @@ const mapStateToProps = (state) => {
         user: state.user,
         title: state.title,
         message: state.message,
+        room: state.room,
     }
 }
 

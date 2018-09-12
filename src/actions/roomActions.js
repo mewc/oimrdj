@@ -21,70 +21,81 @@ const DEFAULT_ROOM = {
     isProtected: false,
     name: 'default',
     timeout: 2000,
+    owner: {},
 }
 
-export function exitRoom() {
+export function exitRoom(code) {
     return dispatch => {
         dispatch(exitRoomBegin());
-        dispatch(exitRoomSuccess())
+
+        let uid = auth().currentUser.uid;
+        db.ref('rooms/' + code + '/participants/').update({[uid]: false});
+
+        dispatch(exitRoomSuccess());
     }
 };
 
 export function findRoom(code) {
     return dispatch => {
         dispatch(findRoomBegin());
-        console.log(code);
         //if room
-        db.ref('/rooms/').child(code).once('value', function(snapshot) {
-            console.log(snapshot.val());
-            console.log(snapshot.key);
-            console.log(snapshot.exists());
+        db.ref('/rooms/').child(code).once('value', function (snapshot) {
             let room = snapshot.val();
 
-            if(!snapshot.exists()){
+            if (!snapshot.exists()) {
                 console.log("Room code not found, creating");
 
                 //Need to get user to confirm this ----
                 dispatch(createRoomBegin());
-
                 let newRoom = DEFAULT_ROOM;
                 newRoom.code = code;
                 newRoom.name = code;
                 newRoom.owner[auth().currentUser.uid] = true;
-                console.log(newRoom);
-
                 db.ref('/rooms/' + code).set(newRoom)
-                    .then((newRoom) => {
-                        room = newRoom;
+                    .then((result) => {
                         dispatch(createRoomSuccess());
+
+
+                        //Join Room
+                        dispatch(enterRoomBegin());
+                        //add userId to participant list (doesnt matter if they already exist)
+                        db.ref('/rooms/' + newRoom.code + /participants/ + auth().currentUser.uid)
+                            .set(true)
+                            .then(() => {
+                                dispatch(enterRoomSuccess(newRoom));
+                            })
+                            .catch((error) => {
+                                dispatch(enterRoomFailure(error));
+                            });
+
                     })
                     .catch((error) => {
-                        console.log(error);
                         dispatch(createRoomFailure(error));
                     });
                 ;
-
-            }else {
+            } else {
                 console.log("Room exists, joining...");
                 dispatch(findRoomSuccess());
 
+
+
+                //Join Room (same as code about - how to extract?!
+                dispatch(enterRoomBegin());
+                console.log(room);
+                //add userId to participant list (doesnt matter if they already exist)
+                db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
+                    .set(true)
+                    .then(() => {
+
+                        dispatch(enterRoomSuccess(room));
+
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        dispatch(enterRoomFailure(error));
+                    });
+
             }
-
-
-            //Join Room
-            dispatch(enterRoomBegin());
-            console.log(room);
-            //add userId to participant list (doesnt matter if they already exist)
-            db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
-                .set(true)
-                .then(() => {
-                    dispatch(enterRoomSuccess(room));
-                })
-                .catch((error) => {
-                    console.log(error);
-                    dispatch(enterRoomFailure(error));
-                });
-            ;
 
         });
     }
@@ -106,8 +117,6 @@ export const findRoomFailure = error => ({
 });
 
 
-
-
 export const enterRoomBegin = () => ({
     type: ENTER_ROOM_BEGIN,
     payload: {message: 'Entering Room'}
@@ -122,8 +131,6 @@ export const enterRoomFailure = error => ({
     type: ENTER_ROOM_FAILURE,
     payload: {error}
 });
-
-
 
 
 export const exitRoomBegin = () => ({
@@ -142,7 +149,6 @@ export const exitRoomFailure = error => ({
 });
 
 
-
 export const createRoomBegin = () => ({
     type: CREATE_ROOM_BEGIN,
     payload: {message: 'Creating your Room'}
@@ -156,6 +162,58 @@ export const createRoomFailure = error => ({
     type: CREATE_ROOM_FAILURE,
     payload: {error}
 });
+
+
+export const SWITCH_TAB = 'SWITCH_TAB';
+
+
+export function switchTab(roomTab) {
+    return dispatch => {
+        dispatch(switchTabSuccess(roomTab));
+    }
+};
+
+export const switchTabSuccess = roomTab => ({
+    type: SWITCH_TAB,
+    payload: {roomTab: roomTab, message: roomTab}
+});
+
+
+
+export const CHANGE_ROOM_NAME_SUCCESS = 'CHANGE_ROOM_NAME_SUCCESS';
+export const CHANGE_ROOM_NAME_BEGIN = 'CHANGE_ROOM_NAME_BEGIN';
+export const CHANGE_ROOM_NAME_FAILURE = 'CHANGE_ROOM_NAME_FAILURE';
+
+
+export function changeRoomName(name, code) {
+    return dispatch => {
+        dispatch(changeRoomNameBegin());
+        db.ref('/rooms/' + code + /name/)
+            .set(name)
+            .then(() => {
+                dispatch(changeRoomNameSuccess(name));
+            })
+            .catch((error) => {
+                dispatch(changeRoomNameFailure(error));
+            });
+    }
+};
+
+export const changeRoomNameBegin = () => ({
+    type: CHANGE_ROOM_NAME_BEGIN,
+    payload: {message: 'Changing room name'}
+});
+
+export const changeRoomNameSuccess = name => ({
+    type: CHANGE_ROOM_NAME_SUCCESS,
+    payload: {newName: name}
+});
+
+export const changeRoomNameFailure = error => ({
+    type: CHANGE_ROOM_NAME_FAILURE,
+    payload: {error},
+});
+
 
 
 
