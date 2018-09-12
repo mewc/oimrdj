@@ -43,7 +43,7 @@ export function findRoom(code) {
             let room = snapshot.val();
 
             if (!snapshot.exists()) {
-                console.log("Room code not found, creating");
+                //Room not found, crfeating room.
 
                 //Need to get user to confirm this ----
                 dispatch(createRoomBegin());
@@ -74,14 +74,13 @@ export function findRoom(code) {
                     });
                 ;
             } else {
-                console.log("Room exists, joining...");
+            //Room exists, joining
                 dispatch(findRoomSuccess());
 
 
 
                 //Join Room (same as code about - how to extract?!
                 dispatch(enterRoomBegin());
-                console.log(room);
                 //add userId to participant list (doesnt matter if they already exist)
                 db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
                     .set(true)

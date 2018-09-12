@@ -20,7 +20,6 @@ class Room extends Component {
         //check if admin
         let isAdmin = false;
         if(this.props.room.owner[auth().currentUser.uid]){
-            console.log('user is admin');
             isAdmin= true;
         }
         this.state = {
