@@ -2,14 +2,7 @@ import {auth, provider, db} from "../Client.js";
 
 import {exitRoom} from "./roomActions";
 
-export const LOGIN_BEGIN = 'LOGIN_BEGIN';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-
-export const LOGOUT_BEGIN = 'LOGOUT_BEGIN';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
-
+import {LOGIN_BEGIN, LOGOUT_SUCCESS, LOGIN_SUCCESS,LOGOUT_BEGIN,LOGOUT_FAILURE,LOGIN_FAILURE} from "./indexActions";
 
 export function logoutUser() {
     return dispatch => {

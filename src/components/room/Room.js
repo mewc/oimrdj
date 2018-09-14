@@ -47,7 +47,8 @@ class Room extends Component {
         return (
             <div>
                 <div>
-                    <p>Welcome to room: {this.props.room.name}</p>
+                    <h1>Welcome to: {this.props.room.name} </h1>
+                    <h2>{this.props.room.code} </h2>
                     {this.tabRender(this.props.roomTab)}
                     <RoomBottomNav isAdmin={this.state.isAdmin}/>
                 </div>

@@ -1,4 +1,4 @@
-export const SNACKBAR = 'SNACKBAR';
+import {SNACKBAR} from "./indexActions";
 
 export function showSnackbar(message){
   return {

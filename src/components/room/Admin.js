@@ -51,10 +51,10 @@ class Admin extends React.Component {
     //admin has admin controls + all profile stuff too
     render() {
         return <React.Fragment>
-            <h2>Admin</h2>
+            <h3>Admin</h3>
 
             <TextField
-                label={str.LABEL_CHANGEROOMNAME + ':'}
+                label={str.LABEL_ROOMNAME + ':'}
                 InputLabelProps={{
                     shrink: true,
                 }}
@@ -69,6 +69,8 @@ class Admin extends React.Component {
                     }
                 }}
             />
+
+
 
             <Profile/>
         </React.Fragment>;
