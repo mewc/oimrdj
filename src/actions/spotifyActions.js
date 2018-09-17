@@ -4,28 +4,47 @@ import {
     SEARCH_TRACK_SUCCESS
 } from "./indexActions";
 
-import axios from 'axios';
+import axios from "axios";
+import {db, auth} from "../Client";
 
-export function searchTrack(input){
+export function searchTrack(input) {
     return dispatch => {
         dispatch(searchTrackBegin());
-            const BASE_URL = "https://api.spotify.com/v1/";
-            axios.get(BASE_URL, {
-                params: {
-                    search: input,
-                }
-            })
+
+        console.log(input);
+
+        axios.get("https://oimrdj-backend.herokuapp.com/search", {
+            params: {
+                query: input
+            }
+        })
             .then((response) => {
-                console.log(response);
-                dispatch(searchTrackSuccess(response));
+                console.log(response.data.body.tracks);
+                dispatch(searchTrackSuccess(response.data.body.tracks));
+
+
+                let searchLog = {
+                    [auth().currentUser.uid]: new Date().getMilliseconds(),
+                }
+                db.ref('/searches/' + input).set(searchLog)
+                    .then(() => {
+                        console.log('search log success');
+
+                    })
+                    .catch(() => {
+                        console.log('search log fail');
+
+                    });
+
             })
             .catch((err) => {
                 console.log(err);
                 dispatch(searchTrackFailure(err.message));
-            })
+            });
+
 
     }
-};
+}
 
 
 export const searchTrackBegin = () => ({

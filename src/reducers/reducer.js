@@ -167,7 +167,7 @@ export default function reducer(state = defaultState, action) {
         case SEARCH_TRACK_SUCCESS:
             return {
                 ...state,
-                spotify: action.payload.searchResult
+                spotify: action.payload.items
             }
         default:
             return state;

@@ -69,6 +69,7 @@ class Search extends React.Component {
                     }
                 }}
             />
+            {(this.props.spotify)?this.props.spotify.length + ' results':'Please search again.'}
         </React.Fragment>
     }
 }
