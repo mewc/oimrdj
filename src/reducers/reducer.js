@@ -1,9 +1,35 @@
 import * as strings from '../static/Strings.js';
 import {
-    LOGIN_FAILURE,    LOGIN_SUCCESS,    LOGIN_BEGIN,    LOGOUT_SUCCESS,    LOGOUT_FAILURE,    LOGOUT_BEGIN,
-    FIND_ROOM_BEGIN,    FIND_ROOM_FAILURE,    CREATE_ROOM_FAILURE,    CREATE_ROOM_BEGIN,    EXIT_ROOM_FAILURE,    EXIT_ROOM_SUCCESS,    ENTER_ROOM_FAILURE,    ENTER_ROOM_SUCCESS,    ENTER_ROOM_BEGIN,    EXIT_ROOM_BEGIN,    FIND_ROOM_SUCCESS,    CREATE_ROOM_SUCCESS, SWITCH_TAB, CHANGE_ROOM_NAME_SUCCESS, CHANGE_ROOM_NAME_BEGIN, CHANGE_ROOM_NAME_FAILURE,
-    GET_TRACK_SUCCESS,GET_TRACK_BEGIN,GET_TRACK_FAILURE,
-    SNACKBAR, CHANGE_TIMEOUT_BEGIN, CHANGE_TIMEOUT_FAILURE, CHANGE_TIMEOUT_SUCCESS
+    LOGIN_FAILURE,
+    LOGIN_SUCCESS,
+    LOGIN_BEGIN,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAILURE,
+    LOGOUT_BEGIN,
+    FIND_ROOM_BEGIN,
+    FIND_ROOM_FAILURE,
+    CREATE_ROOM_FAILURE,
+    CREATE_ROOM_BEGIN,
+    EXIT_ROOM_FAILURE,
+    EXIT_ROOM_SUCCESS,
+    ENTER_ROOM_FAILURE,
+    ENTER_ROOM_SUCCESS,
+    ENTER_ROOM_BEGIN,
+    EXIT_ROOM_BEGIN,
+    FIND_ROOM_SUCCESS,
+    CREATE_ROOM_SUCCESS,
+    SWITCH_TAB,
+    CHANGE_ROOM_NAME_SUCCESS,
+    CHANGE_ROOM_NAME_BEGIN,
+    CHANGE_ROOM_NAME_FAILURE,
+    GET_TRACK_SUCCESS,
+    GET_TRACK_BEGIN,
+    GET_TRACK_FAILURE,
+    SNACKBAR,
+    CHANGE_TIMEOUT_BEGIN,
+    CHANGE_TIMEOUT_FAILURE,
+    CHANGE_TIMEOUT_SUCCESS,
+    SEARCH_TRACK_BEGIN, SEARCH_TRACK_FAILURE, SEARCH_TRACK_SUCCESS
 } from "../actions/indexActions";
 
 let defaultUser = {
@@ -28,6 +54,7 @@ let defaultState = {
     requests: null,
     message: '', //this shows in title or state updates
     roomTab: 'search', //defaults so bottom nav shows search tab first
+    spotify: null,
 };
 
 
@@ -47,6 +74,7 @@ export default function reducer(state = defaultState, action) {
         case CHANGE_ROOM_NAME_BEGIN:
         case CHANGE_TIMEOUT_BEGIN:
         case GET_TRACK_BEGIN:
+        case SEARCH_TRACK_BEGIN:
             return {
                 ...state,
                 loading: true,
@@ -62,6 +90,7 @@ export default function reducer(state = defaultState, action) {
         case CHANGE_ROOM_NAME_FAILURE:
         case CHANGE_TIMEOUT_FAILURE:
         case GET_TRACK_FAILURE:
+        case SEARCH_TRACK_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -134,6 +163,11 @@ export default function reducer(state = defaultState, action) {
         case GET_TRACK_SUCCESS:
             return {
                 ...state,
+            };
+        case SEARCH_TRACK_SUCCESS:
+            return {
+                ...state,
+                spotify: action.payload.searchResult
             }
         default:
             return state;
