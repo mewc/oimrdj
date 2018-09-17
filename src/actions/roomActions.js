@@ -1,6 +1,26 @@
 import {auth, db} from "../Client.js";
 
-import {FIND_ROOM_SUCCESS, CREATE_ROOM_SUCCESS,EXIT_ROOM_SUCCESS,ENTER_ROOM_SUCCESS,FIND_ROOM_BEGIN,CREATE_ROOM_BEGIN,ENTER_ROOM_BEGIN,EXIT_ROOM_BEGIN,FIND_ROOM_FAILURE,CREATE_ROOM_FAILURE,EXIT_ROOM_FAILURE,ENTER_ROOM_FAILURE} from "./indexActions";
+import {
+    SWITCH_TAB,
+    CHANGE_TIMEOUT_FAILURE,
+    CHANGE_TIMEOUT_BEGIN,
+    CHANGE_TIMEOUT_SUCCESS,
+    CHANGE_ROOM_NAME_FAILURE,
+    CHANGE_ROOM_NAME_BEGIN,
+    CHANGE_ROOM_NAME_SUCCESS,
+    FIND_ROOM_SUCCESS,
+    CREATE_ROOM_SUCCESS,
+    EXIT_ROOM_SUCCESS,
+    ENTER_ROOM_SUCCESS,
+    FIND_ROOM_BEGIN,
+    CREATE_ROOM_BEGIN,
+    ENTER_ROOM_BEGIN,
+    EXIT_ROOM_BEGIN,
+    FIND_ROOM_FAILURE,
+    CREATE_ROOM_FAILURE,
+    EXIT_ROOM_FAILURE,
+    ENTER_ROOM_FAILURE
+} from "./indexActions";
 
 const DEFAULT_ROOM = {
     code: null,
@@ -29,7 +49,7 @@ export function findRoom(code) {
             let room = snapshot.val();
 
             if (!snapshot.exists()) {
-                //Room not found, crfeating room.
+                //Room not found, creating room.
 
                 //Need to get user to confirm this ----
                 dispatch(createRoomBegin());
@@ -60,9 +80,8 @@ export function findRoom(code) {
                     });
                 ;
             } else {
-            //Room exists, joining
+                //Room exists, joining
                 dispatch(findRoomSuccess());
-
 
 
                 //Join Room (same as code about - how to extract?!
@@ -133,7 +152,6 @@ export const exitRoomFailure = error => ({
     payload: {error}
 });
 
-
 export const createRoomBegin = () => ({
     type: CREATE_ROOM_BEGIN,
     payload: {message: 'Creating your Room'}
@@ -148,10 +166,6 @@ export const createRoomFailure = error => ({
     payload: {error}
 });
 
-
-export const SWITCH_TAB = 'SWITCH_TAB';
-
-
 export function switchTab(roomTab) {
     return dispatch => {
         dispatch(switchTabSuccess(roomTab));
@@ -162,13 +176,6 @@ export const switchTabSuccess = roomTab => ({
     type: SWITCH_TAB,
     payload: {roomTab: roomTab, message: roomTab}
 });
-
-
-
-export const CHANGE_ROOM_NAME_SUCCESS = 'CHANGE_ROOM_NAME_SUCCESS';
-export const CHANGE_ROOM_NAME_BEGIN = 'CHANGE_ROOM_NAME_BEGIN';
-export const CHANGE_ROOM_NAME_FAILURE = 'CHANGE_ROOM_NAME_FAILURE';
-
 
 export function changeRoomName(name, code) {
     return dispatch => {
@@ -198,6 +205,37 @@ export const changeRoomNameFailure = error => ({
     type: CHANGE_ROOM_NAME_FAILURE,
     payload: {error},
 });
+
+
+export function changeTimoutValue(timeout, code) {
+    return dispatch => {
+        dispatch(changeTimeoutBegin());
+        db.ref('/rooms/' + code + /timeout/)
+            .set(timeout)
+            .then(() => {
+                dispatch(changeTimeoutSuccess(timeout));
+            })
+            .catch((error) => {
+                dispatch(changeTimeoutFailure(error));
+            });
+    }
+};
+
+export const changeTimeoutBegin = () => ({
+    type: CHANGE_TIMEOUT_BEGIN,
+    payload: {message: 'Changing timeout value'}
+});
+
+export const changeTimeoutSuccess = timeout => ({
+    type: CHANGE_TIMEOUT_SUCCESS,
+    payload: {newTimeout: timeout}
+});
+
+export const changeTimeoutFailure = error => ({
+    type: CHANGE_TIMEOUT_FAILURE,
+    payload: {error},
+});
+
 
 
 

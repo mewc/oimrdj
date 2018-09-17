@@ -10,8 +10,9 @@ export const LABEL_CREATEROOM = "Create";
 export const LABEL_JOINROOM = "Join";
 
 export const LABEL_ROOM_CODE_INPUT = "I want to join room...";
-export const LABEL_ROOMNAME = "Room name.";
-export const LABEL_ROOMCODE = "Room code.";
+export const LABEL_ROOM_NAME = "Room name";
+export const LABEL_ROOM_CODE = "Room code";
+export const LABEL_ROOM_TIMEOUT = "Room timeout";
 
 export const TAB_SEARCH = "search";
 export const TAB_SAVED = "saved";

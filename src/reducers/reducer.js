@@ -2,8 +2,8 @@ import * as strings from '../static/Strings.js';
 import {
     LOGIN_FAILURE,    LOGIN_SUCCESS,    LOGIN_BEGIN,    LOGOUT_SUCCESS,    LOGOUT_FAILURE,    LOGOUT_BEGIN,
     FIND_ROOM_BEGIN,    FIND_ROOM_FAILURE,    CREATE_ROOM_FAILURE,    CREATE_ROOM_BEGIN,    EXIT_ROOM_FAILURE,    EXIT_ROOM_SUCCESS,    ENTER_ROOM_FAILURE,    ENTER_ROOM_SUCCESS,    ENTER_ROOM_BEGIN,    EXIT_ROOM_BEGIN,    FIND_ROOM_SUCCESS,    CREATE_ROOM_SUCCESS, SWITCH_TAB, CHANGE_ROOM_NAME_SUCCESS, CHANGE_ROOM_NAME_BEGIN, CHANGE_ROOM_NAME_FAILURE,
-    GET_TRACK_SUCCESS,GET_TRACK_START,GET_TRACK_FAIL,
-    SNACKBAR
+    GET_TRACK_SUCCESS,GET_TRACK_BEGIN,GET_TRACK_FAILURE,
+    SNACKBAR, CHANGE_TIMEOUT_BEGIN, CHANGE_TIMEOUT_FAILURE, CHANGE_TIMEOUT_SUCCESS
 } from "../actions/indexActions";
 
 let defaultUser = {
@@ -45,6 +45,8 @@ export default function reducer(state = defaultState, action) {
         case CREATE_ROOM_BEGIN:
         case FIND_ROOM_BEGIN:
         case CHANGE_ROOM_NAME_BEGIN:
+        case CHANGE_TIMEOUT_BEGIN:
+        case GET_TRACK_BEGIN:
             return {
                 ...state,
                 loading: true,
@@ -58,6 +60,8 @@ export default function reducer(state = defaultState, action) {
         case CREATE_ROOM_FAILURE:
         case FIND_ROOM_FAILURE:
         case CHANGE_ROOM_NAME_FAILURE:
+        case CHANGE_TIMEOUT_FAILURE:
+        case GET_TRACK_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -119,6 +123,18 @@ export default function reducer(state = defaultState, action) {
                     name: action.payload.newName
                 }
             };
+        case CHANGE_TIMEOUT_SUCCESS:
+            return {
+                ...state,
+                room: {
+                    ...state.room,
+                    timeout: action.payload.newTimeout
+                }
+            };
+        case GET_TRACK_SUCCESS:
+            return {
+                ...state,
+            }
         default:
             return state;
     }

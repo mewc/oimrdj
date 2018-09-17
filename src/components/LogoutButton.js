@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button/Button";
 import LogoutIcon from "@material-ui/icons/HighlightOff";
 
 import {logoutUser} from "../actions/authActions";
+import {LABEL_LOGOUT} from "../static/Strings";
 
 
 class LogoutButton extends React.Component {
@@ -17,7 +18,7 @@ class LogoutButton extends React.Component {
 
         return <React.Fragment>
             <Button variant={'extendedFab'} >
-                Logout
+                {LABEL_LOGOUT}
                 <LogoutIcon onClick={this.handleLogoutClick.bind(this)}/>
             </Button>
         </React.Fragment>

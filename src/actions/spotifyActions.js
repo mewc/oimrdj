@@ -1,4 +1,4 @@
-import {GET_TRACK_FAIL, GET_TRACK_START, GET_TRACK_SUCCESS} from "./indexActions";
+import {GET_TRACK_FAILURE, GET_TRACK_START, GET_TRACK_SUCCESS} from "./indexActions";
 
 export function showSnackbar(message){
     return {

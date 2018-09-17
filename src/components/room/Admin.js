@@ -3,14 +3,12 @@ import {connect} from 'react-redux';
 import Profile from "./Profile";
 import * as str from "../../static/Strings";
 import TextField from "@material-ui/core/TextField/TextField";
-import {changeRoomName} from "../../actions/roomActions";
-
-
+import {changeRoomName, changeTimoutValue} from "../../actions/roomActions";
 
 
 class Admin extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -19,14 +17,19 @@ class Admin extends React.Component {
                 value: '',
                 submitDisabled: true,
             },
+            timeoutChange: {
+                value: '',
+                submitDisabled: true,
+            },
             isAdmin: true,
         };
     }
 
 
-    onInputChange(event) {
+    onNameInputChange(event) {
         if (event.target.value.length > 0) {
             this.setState({
+                ...this.state,
                 errorText: '',
                 nameChange: {
                     value: event.target.value,
@@ -35,9 +38,34 @@ class Admin extends React.Component {
             });
         } else {
             this.setState({
+                ...this.state,
                 errorText: 'Name cannot be empty',
                 nameChange: {
                     value: event.target.value,
+                    submitDisabled: true,
+                },
+            });
+        }
+    }
+
+    onTimeoutInputChange(event) {
+        let inMs = event.target.value * 1000;
+        if (event.target.value >= 0) {
+            //set timeout to ms
+
+            this.setState({
+                ...this.state,
+                errorText: '',
+                timeoutChange: {
+                    value: inMs,
+                    submitDisabled: false,
+                },
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                errorText: 'Timeout value invalid',
+                timeoutChange: {
                     submitDisabled: true,
                 },
             });
@@ -48,29 +76,56 @@ class Admin extends React.Component {
         this.props.dispatch(changeRoomName(this.state.nameChange.value, this.props.room.code));
     }
 
+
+    handleTimeoutChangeEvent = () => {
+        this.props.dispatch(changeTimoutValue(this.state.timeoutChange.value, this.props.room.code));
+    }
+
+
     //admin has admin controls + all profile stuff too
     render() {
         return <React.Fragment>
             <h3>Admin</h3>
+            <p>{this.props.room.timeout}</p>
+            <ul>
+                <li>
+                    <TextField
+                        label={str.LABEL_ROOM_NAME + ':'}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        placeholder={this.props.room.name}
+                        helperText={this.state.errorText}
+                        // fullWidth
+                        margin="normal"
+                        onChange={this.onNameInputChange.bind(this)}
+                        onKeyPress={(event) => {
+                            if (event.key === 'Enter' && !this.state.nameChange.submitDisabled) {
+                                this.handleNameChangeEvent();
+                            }
+                        }}
+                    />
+                </li>
+                <li>
 
-            <TextField
-                label={str.LABEL_ROOMNAME + ':'}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                placeholder={this.props.room.name}
-                helperText={this.state.errorText}
-                // fullWidth
-                margin="normal"
-                onChange={this.onInputChange.bind(this)}
-                onKeyPress={(event) => {
-                    if(event.key === 'Enter' && !this.state.nameChange.submitDisabled){
-                        this.handleNameChangeEvent();
-                    }
-                }}
-            />
-
-
+                    <TextField
+                        label={str.LABEL_ROOM_TIMEOUT + ':'}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        placeholder={this.props.room.timeout / 1000 + ' seconds'}
+                        helperText={this.state.errorText}
+                        // fullWidth
+                        margin="normal"
+                        onChange={this.onTimeoutInputChange.bind(this)}
+                        onKeyPress={(event) => {
+                            if (event.key === 'Enter' && !this.state.timeoutChange.submitDisabled) {
+                                this.handleTimeoutChangeEvent();
+                            }
+                        }}
+                    />
+                </li>
+            </ul>
 
             <Profile/>
         </React.Fragment>;
@@ -78,15 +133,13 @@ class Admin extends React.Component {
 }
 
 
-
 const mapStateToProps = (state) => {
     return {
-        message:state.message,
+        message: state.message,
         loading: state.loading,
         room: state.room,
     }
 }
-
 
 
 export default connect(mapStateToProps)(Admin);
