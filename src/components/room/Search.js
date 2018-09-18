@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import TextField from "@material-ui/core/TextField/TextField";
 import * as str from "../../static/Strings";
 import {searchTrack} from "../../actions/spotifyActions";
+import SearchResultsGrid from "./SearchResultsGrid";
 
 
 
@@ -69,7 +70,9 @@ class Search extends React.Component {
                     }
                 }}
             />
-            {(this.props.spotify)?this.props.spotify.length + ' results':'Please search again.'}
+            {(this.props.spotify)?this.props.spotify.length + ' results':''}
+            {(this.props.spotify)?<SearchResultsGrid />:''}
+
         </React.Fragment>
     }
 }
@@ -78,7 +81,6 @@ class Search extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        message: state.message,
         loading: state.loading,
         spotify: state.spotify,
     }

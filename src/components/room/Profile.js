@@ -9,14 +9,6 @@ import LeaveRoomButton from "./LeaveRoomButton";
 
 class Profile extends React.Component {
 
-    handleLogoutClick(){
-        this.props.dispatch(logoutUser());
-    }
-
-    handleLeaveRoomClick(){
-        this.props.dispatch(exitRoom())
-    }
-
 
     render() {
 

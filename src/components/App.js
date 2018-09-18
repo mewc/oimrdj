@@ -11,8 +11,7 @@ import Start from './Start';
 
 import {loginUser} from '../actions/authActions';
 import Snackbar from "./Snackbar";
-
-
+import {isBrowser} from "react-device-detect";
 
 
 class App extends Component {
@@ -23,6 +22,7 @@ class App extends Component {
             this.props.dispatch(loginUser(user));
             //TODO remove this for poroduction
         });
+        (isBrowser)?console.log('is browser'):console.log('is mobile!');
     }
 
     render() {
