@@ -61,7 +61,7 @@ class Search extends React.Component {
                 }}
                 placeholder={str.PLACEHOLDER_SPOTIFY_SEARCH}
                 helperText={this.state.errorText}
-                // fullWidth
+                fullWidth
                 margin="normal"
                 onChange={this.onSearchQueryChange.bind(this)}
                 onKeyPress={(event) => {

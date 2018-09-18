@@ -1,5 +1,5 @@
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
+import SendIcon from "@material-ui/icons/Send";
 import TickIcon from "@material-ui/icons/Done";
 
 
@@ -30,7 +30,7 @@ class RequestSubmitButton extends React.Component {
 
         return <IconButton disabled={this.state.requested}
                            onClick={this.handleRequestEvent.bind(this)} style={(this.state.requested)? {color: 'lightGreen'} : {color: 'white'}}>
-            {(!this.state.requested)?<StarBorderIcon  />:<TickIcon/>}
+            {(!this.state.requested)?<SendIcon  />:<TickIcon/>}
         </IconButton>;
     }
 }

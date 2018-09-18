@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import SearchIcon from '@material-ui/icons/Search';
-import SavedIcon from '@material-ui/icons/Stars';
 import HistoryIcon from '@material-ui/icons/History';
 import AdminIcon from '@material-ui/icons/VpnKey';
 import PersonIcon from '@material-ui/icons/Person';

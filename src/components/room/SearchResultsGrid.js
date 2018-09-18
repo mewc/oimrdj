@@ -9,7 +9,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import RequestSubmitButton from './RequestSubmitButton';
 
-import {BrowserView, MobileView, isBrowser, isMobile} from 'react-device-detect';
+import { isBrowser} from 'react-device-detect';
 
 const styles = theme => ({
     root: {

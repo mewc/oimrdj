@@ -7,13 +7,13 @@ import {db, auth} from "../Client";
 //TrackId as key for requestTemplate,
 //Submitted by is collection of uid keys as true (see number of people who requested)
 //eg. 46234623 : true
-const requestTemplate = {
-    isApproved: false,
-    songArtist: null,
-    songTitle: null,
-    submittedBy: null,
-    timestamp: null,
-}
+// const requestTemplate = {
+//     isApproved: false,
+//     songArtist: null,
+//     songTitle: null,
+//     submittedBy: null,
+//     timestamp: null,
+// }
 
 export function submitRequest(song, roomCode) {
     return dispatch => {
