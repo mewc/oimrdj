@@ -3,6 +3,7 @@ import {auth, provider, db} from "../Client.js";
 import {exitRoom} from "./roomActions";
 
 import {LOGIN_BEGIN, LOGOUT_SUCCESS, LOGIN_SUCCESS,LOGOUT_BEGIN,LOGOUT_FAILURE,LOGIN_FAILURE} from "./indexActions";
+import {showSnackbar} from "./actions";
 
 export function logoutUser() {
     return dispatch => {
@@ -48,11 +49,13 @@ export function loginUser() {
                     db.ref('/users/').child(id).once('value', function (snapshot) {
                         if (snapshot.exists()) {
                             dispatch(loginSuccess(user))
+                            dispatch(showSnackbar('Logged in as ' + user.name));
                         } else {
                             //CREATE new user if not in system
                             db.ref('/users/' + id).set(user)
                                 .then((user) => {
                                     dispatch(loginSuccess(user));
+                                    dispatch(showSnackbar('Logged in ' + user.name));
                                 })
                                 .catch((error) => {
                                     console.log(error);

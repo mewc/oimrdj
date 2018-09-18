@@ -2,13 +2,14 @@ import {REQUEST_TRACK_BEGIN, REQUEST_TRACK_FAILURE, REQUEST_TRACK_SUCCESS} from 
 
 
 import {db, auth} from "../Client";
+import {showSnackbar} from "./actions";
 
 
 //TrackId as key for requestTemplate,
 //Submitted by is collection of uid keys as true (see number of people who requested)
 //eg. 46234623 : true
 // const requestTemplate = {
-//     isApproved: false,
+//     isApproved: null,  ////presence of this attr. will mean its approved or ignored
 //     songArtist: null,
 //     songTitle: null,
 //     submittedBy: null,
@@ -23,7 +24,7 @@ export function submitRequest(song, roomCode) {
         console.log(roomCode);
 
         let songToRequest = {
-            isApproved: false,
+            // isApproved: null,  //presence of this attr. will mean its approved or ignored
             songArtist: song.artists[0].name,
             songTitle: song.name,
             submittedBy: {[auth().currentUser.uid]: true},
@@ -34,11 +35,13 @@ export function submitRequest(song, roomCode) {
             .then((result) => {
                 console.log('song request success');
                 console.log(result);
-                dispatch(submitRequestSuccess());
+                dispatch(submitRequestSuccess(songToRequest));
+                dispatch(showSnackbar(  songToRequest.songTitle + ' by ' + songToRequest.songArtist + ' requested'));
+
             })
-            .catch(() => {
+            .catch((err) => {
                 console.log('song request fail');
-                dispatch(submitRequestFailure());
+                dispatch(submitRequestFailure(err));
             });
 
 
@@ -48,7 +51,7 @@ export function submitRequest(song, roomCode) {
 
 export const submitRequestBegin = () => ({
     type: REQUEST_TRACK_BEGIN,
-    payload: {message: 'Submitting song request...'}
+    payload: {message: 'Sending Song request...'}
 });
 
 export const submitRequestSuccess = request => ({

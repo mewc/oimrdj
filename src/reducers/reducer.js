@@ -29,8 +29,14 @@ import {
     CHANGE_TIMEOUT_BEGIN,
     CHANGE_TIMEOUT_FAILURE,
     CHANGE_TIMEOUT_SUCCESS,
-    SEARCH_TRACK_BEGIN, SEARCH_TRACK_FAILURE, SEARCH_TRACK_SUCCESS
+    SEARCH_TRACK_BEGIN,
+    SEARCH_TRACK_FAILURE,
+    SEARCH_TRACK_SUCCESS,
+    REQUEST_TRACK_SUCCESS,
+    REQUEST_TRACK_FAILURE,
+    REQUEST_TRACK_BEGIN
 } from "../actions/indexActions";
+import {LABEL_LOBBY} from "../static/Strings";
 
 let defaultUser = {
     user: {
@@ -75,6 +81,7 @@ export default function reducer(state = defaultState, action) {
         case CHANGE_TIMEOUT_BEGIN:
         case GET_TRACK_BEGIN:
         case SEARCH_TRACK_BEGIN:
+        case REQUEST_TRACK_BEGIN:
             return {
                 ...state,
                 loading: true,
@@ -91,6 +98,7 @@ export default function reducer(state = defaultState, action) {
         case CHANGE_TIMEOUT_FAILURE:
         case GET_TRACK_FAILURE:
         case SEARCH_TRACK_FAILURE:
+        case REQUEST_TRACK_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -103,7 +111,7 @@ export default function reducer(state = defaultState, action) {
                 loading: false,
                 error: null,
                 user: action.payload.user,
-                message: '',
+                message: LABEL_LOBBY,
             };
         case LOGOUT_SUCCESS:
             return {
@@ -119,7 +127,7 @@ export default function reducer(state = defaultState, action) {
                 loading: false,
                 error: null,
                 room: action.payload.room,
-                message: '',
+                message: action.payload.room.name,
             };
         case EXIT_ROOM_SUCCESS:
             return {
@@ -127,7 +135,7 @@ export default function reducer(state = defaultState, action) {
                 loading: false,
                 error: null,
                 room: null,
-                message: '',
+                message: LABEL_LOBBY,
             };
         case FIND_ROOM_SUCCESS:
         case CREATE_ROOM_SUCCESS:
@@ -150,24 +158,32 @@ export default function reducer(state = defaultState, action) {
                 room: {
                     ...state.room,
                     name: action.payload.newName
-                }
+                },
+                message: '',
             };
         case CHANGE_TIMEOUT_SUCCESS:
             return {
                 ...state,
                 room: {
                     ...state.room,
-                    timeout: action.payload.newTimeout
+                    timeout: action.payload.newTimeout,
+                    message: '',
                 }
             };
         case GET_TRACK_SUCCESS:
             return {
                 ...state,
+                message: '',
             };
         case SEARCH_TRACK_SUCCESS:
             return {
                 ...state,
-                spotify: action.payload.items
+                spotify: action.payload.items,
+                message: '',
+            };
+        case REQUEST_TRACK_SUCCESS:
+            return {
+                ...state,
             }
         default:
             return state;

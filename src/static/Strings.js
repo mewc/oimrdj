@@ -27,3 +27,5 @@ export const TAB_PROFILE = "profile";
 export const CREDIT_NAME = "mewc";
 export const CREDIT_LINK = "http://mewc.info/";
 export const FOOTER_COPYRIGHT = "oimrdj pty ltd";
+
+export const LABEL_LOBBY = "Room Lobby";

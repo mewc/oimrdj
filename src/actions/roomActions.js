@@ -21,6 +21,7 @@ import {
     EXIT_ROOM_FAILURE,
     ENTER_ROOM_FAILURE
 } from "./indexActions";
+import {showSnackbar} from "./actions";
 
 const DEFAULT_ROOM = {
     code: null,
@@ -38,6 +39,8 @@ export function exitRoom(code) {
         db.ref('rooms/' + code + '/participants/').update({[uid]: false});
 
         dispatch(exitRoomSuccess());
+        dispatch(exitRoomSuccess(code));
+        dispatch(showSnackbar( 'You just left - ' + code));
     }
 };
 

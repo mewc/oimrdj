@@ -8,10 +8,9 @@ export function showSnackbar(message){
 };
 
 export function hideSnackbar(){
-  let message = false;
   return {
     type: SNACKBAR,
-    payload: {message}
+    payload: {message: false}
   };
 };
 
