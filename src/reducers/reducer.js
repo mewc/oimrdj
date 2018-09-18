@@ -34,7 +34,7 @@ import {
     SEARCH_TRACK_SUCCESS,
     REQUEST_TRACK_SUCCESS,
     REQUEST_TRACK_FAILURE,
-    REQUEST_TRACK_BEGIN
+    REQUEST_TRACK_BEGIN, FETCH_ROOMREQ_BEGIN, FETCH_ROOMREQ_FAILURE, FETCH_ROOMREQ_SUCCESS
 } from "../actions/indexActions";
 import {LABEL_LOBBY} from "../static/Strings";
 
@@ -57,7 +57,7 @@ let defaultState = {
     notification: false,    //this is the snackbar message - usually errors
     user: defaultUser,
     room: null,
-    requests: null,
+    requests: [],
     message: '', //this shows in title or state updates
     roomTab: 'search', //defaults so bottom nav shows search tab first
     spotify: null,
@@ -82,6 +82,7 @@ export default function reducer(state = defaultState, action) {
         case GET_TRACK_BEGIN:
         case SEARCH_TRACK_BEGIN:
         case REQUEST_TRACK_BEGIN:
+        case FETCH_ROOMREQ_BEGIN:
             return {
                 ...state,
                 loading: true,
@@ -99,6 +100,7 @@ export default function reducer(state = defaultState, action) {
         case GET_TRACK_FAILURE:
         case SEARCH_TRACK_FAILURE:
         case REQUEST_TRACK_FAILURE:
+        case FETCH_ROOMREQ_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -184,7 +186,12 @@ export default function reducer(state = defaultState, action) {
         case REQUEST_TRACK_SUCCESS:
             return {
                 ...state,
-            }
+            };
+        case FETCH_ROOMREQ_SUCCESS:
+            return {
+                ...state,
+                requests: action.payload.requests
+            };
         default:
             return state;
     }

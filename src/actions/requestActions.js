@@ -1,4 +1,9 @@
-import {REQUEST_TRACK_BEGIN, REQUEST_TRACK_FAILURE, REQUEST_TRACK_SUCCESS} from "./indexActions";
+import {
+    REQUEST_TRACK_BEGIN,
+    REQUEST_TRACK_FAILURE,
+    REQUEST_TRACK_SUCCESS, RESPOND_REQUEST_BEGIN, RESPOND_REQUEST_FAILURE,
+    RESPOND_REQUEST_SUCCESS
+} from "./indexActions";
 
 
 import {db, auth} from "../Client";
@@ -61,5 +66,54 @@ export const submitRequestSuccess = request => ({
 
 export const submitRequestFailure = error => ({
     type: REQUEST_TRACK_FAILURE,
+    payload: {error}
+});
+
+
+
+
+
+export function respondToRequest(song, roomCode, response) {
+    return dispatch => {
+        dispatch(respondtoRequestBegin());
+
+        console.log(song);
+        console.log(roomCode);
+
+        let songToApprove = {
+            ...song,
+            isApproved: response, //boolean
+            approvedTimestamp: new Date().getMilliseconds(),
+        };
+
+        db.ref('/requests/' + roomCode + '/' + song.id).set(songToApprove)
+            .then((result) => {
+                console.log('song request response success');
+                console.log(result);
+                dispatch(respondToRequestSuccess(songToApprove));
+                dispatch(showSnackbar( songToApprove.songTitle + ' by ' + songToApprove.songArtist + (response)?' accepted':' ignored'));
+
+            })
+            .catch((err) => {
+                console.log('song request response failure');
+                dispatch(respondToRequestFailure(err));
+            });
+
+    }
+}
+
+
+export const respondtoRequestBegin = () => ({
+    type: RESPOND_REQUEST_BEGIN,
+    payload: {message: ''}
+});
+
+export const respondToRequestSuccess = requests => ({
+    type: RESPOND_REQUEST_SUCCESS,
+    payload: {requests: requests}
+});
+
+export const respondToRequestFailure = error => ({
+    type: RESPOND_REQUEST_FAILURE,
     payload: {error}
 });

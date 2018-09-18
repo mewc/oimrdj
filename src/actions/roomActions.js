@@ -19,7 +19,7 @@ import {
     FIND_ROOM_FAILURE,
     CREATE_ROOM_FAILURE,
     EXIT_ROOM_FAILURE,
-    ENTER_ROOM_FAILURE
+    ENTER_ROOM_FAILURE, FETCH_ROOMREQ_BEGIN, FETCH_ROOMREQ_SUCCESS, FETCH_ROOMREQ_FAILURE
 } from "./indexActions";
 import {showSnackbar} from "./actions";
 
@@ -38,9 +38,9 @@ export function exitRoom(code) {
         let uid = auth().currentUser.uid;
         db.ref('rooms/' + code + '/participants/').update({[uid]: false});
 
-        dispatch(exitRoomSuccess());
         dispatch(exitRoomSuccess(code));
         dispatch(showSnackbar( 'You just left - ' + code));
+
     }
 };
 
@@ -86,6 +86,17 @@ export function findRoom(code) {
                 //Room exists, joining
                 dispatch(findRoomSuccess());
 
+                dispatch(fetchRoomRequestsBegin());
+                db.ref('/requests/' + code).once('value', function (snapshot) {
+                    let roomRequests = snapshot.val();
+                    console.log(roomRequests);
+                    if(!snapshot.exists()){
+                        console.log('no requests for room');
+                        dispatch(fetchRoomRequestsFailure(''));
+                    }else{
+                        dispatch(fetchRoomRequestsSuccess(roomRequests))
+                    }
+                });
 
                 //Join Room (same as code about - how to extract?!
                 dispatch(enterRoomBegin());
@@ -93,9 +104,7 @@ export function findRoom(code) {
                 db.ref('/rooms/' + room.code + /participants/ + auth().currentUser.uid)
                     .set(true)
                     .then(() => {
-
                         dispatch(enterRoomSuccess(room));
-
                     })
                     .catch((error) => {
                         console.log(error);
@@ -145,9 +154,9 @@ export const exitRoomBegin = () => ({
     payload: {message: 'Exiting Room'}
 });
 
-export const exitRoomSuccess = room => ({
+export const exitRoomSuccess = code => ({
     type: EXIT_ROOM_SUCCESS,
-    payload: {room}
+    payload: {code: code}
 });
 
 export const exitRoomFailure = error => ({
@@ -236,6 +245,22 @@ export const changeTimeoutSuccess = timeout => ({
 
 export const changeTimeoutFailure = error => ({
     type: CHANGE_TIMEOUT_FAILURE,
+    payload: {error},
+});
+
+
+export const fetchRoomRequestsBegin = () => ({
+    type: FETCH_ROOMREQ_BEGIN,
+    payload: {message: 'Finding song requests'}
+});
+
+export const fetchRoomRequestsSuccess = requests => ({
+    type: FETCH_ROOMREQ_SUCCESS,
+    payload: {requests: requests}
+});
+
+export const fetchRoomRequestsFailure = error => ({
+    type: FETCH_ROOMREQ_FAILURE,
     payload: {error},
 });
 

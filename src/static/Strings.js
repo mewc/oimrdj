@@ -29,3 +29,4 @@ export const CREDIT_LINK = "http://mewc.info/";
 export const FOOTER_COPYRIGHT = "oimrdj pty ltd";
 
 export const LABEL_LOBBY = "Room Lobby";
+export const LABEL_PENDING_REQUESTS = "Pending Requests";

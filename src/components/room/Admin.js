@@ -4,7 +4,7 @@ import Profile from "./Profile";
 import * as str from "../../static/Strings";
 import TextField from "@material-ui/core/TextField/TextField";
 import {changeRoomName, changeTimoutValue} from "../../actions/roomActions";
-
+import RequestResponseList from "./RequestResponseList";
 
 class Admin extends React.Component {
 
@@ -107,7 +107,6 @@ class Admin extends React.Component {
                     />
                 </li>
                 <li>
-
                     <TextField
                         label={str.LABEL_ROOM_TIMEOUT + ':'}
                         InputLabelProps={{
@@ -124,6 +123,9 @@ class Admin extends React.Component {
                             }
                         }}
                     />
+                </li>
+                <li>
+                    <RequestResponseList />
                 </li>
             </ul>
 
