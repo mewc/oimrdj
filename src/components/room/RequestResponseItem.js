@@ -10,6 +10,8 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import ApproveIcon from "@material-ui/icons/Done";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PersonIcon from "@material-ui/icons/Person";
+import PlayIcon from "@material-ui/icons/PlayArrow";
+
 
 
 
@@ -21,11 +23,14 @@ class RequestResponseItem extends React.Component {
             secondary: true,
             dense: false,
         };
-        console.log(props);
     }
 
     handleRequestResponse(response){
         console.log(response);
+    }
+
+    playTrackPreview(){
+        console.log(this.props.data.spotifyId);
     }
 
 
@@ -40,15 +45,23 @@ class RequestResponseItem extends React.Component {
                     <PersonIcon />
                 </Avatar>
             </ListItemAvatar>
+            <ListItemAvatar>
+                <Avatar>
+                    <PersonIcon />
+                </Avatar>
+            </ListItemAvatar>
             <ListItemText
                 primary={req.songTitle + ' - ' + req.songArtist}
                 secondary={this.state.secondary ? 'Requested by: ' + auth().currentUser.displayName : null}
             />
-            <IconButton aria-label="Delete" value={false} onClick={this.handleRequestResponse.bind(this)}>
+            <IconButton aria-label="Play" onClick={this.playTrackPreview.bind(this)}>
+                <PlayIcon />
+            </IconButton>
+            <IconButton aria-label="Delete" value={false} onClick={() => this.handleRequestResponse(false)}>
                 <DeleteIcon />
             </IconButton>
             <ListItemSecondaryAction>
-                <IconButton aria-label="Approve" value={true} onClick={this.handleRequestResponse.bind(this)}>
+                <IconButton aria-label="Approve" value={true} onClick={() => this.handleRequestResponse(true)}>
                     <ApproveIcon />
                 </IconButton>
             </ListItemSecondaryAction>
