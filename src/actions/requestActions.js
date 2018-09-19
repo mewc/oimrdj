@@ -8,6 +8,11 @@ import {
 
 import {db, auth} from "../Client";
 import {showSnackbar} from "./actions";
+import {
+    fetchRoomRequestsBegin,
+    fetchRoomRequestsFailure,
+    fetchRoomRequestsSuccess
+} from "./roomActions";
 
 
 //TrackId as key for requestTemplate,
@@ -115,5 +120,38 @@ export const respondToRequestSuccess = requests => ({
 
 export const respondToRequestFailure = error => ({
     type: RESPOND_REQUEST_FAILURE,
+    payload: {error}
+});
+
+
+export function refreshRequestList(code) {
+    return dispatch => {
+        dispatch(fetchRoomRequestsBegin());
+        db.ref('/requests/' + code).once('value', function (snapshot) {
+            let roomRequests = snapshot.val();
+            console.log(roomRequests);
+            if(!snapshot.exists()){
+                console.log('no requests for room');
+                dispatch(fetchRoomRequestsFailure(''));
+            }else{
+                dispatch(fetchRoomRequestsSuccess(roomRequests))
+            }
+        });
+    }
+}
+
+
+export const refreshRequestListBegin = () => ({
+    type: REQUEST_TRACK_BEGIN,
+    payload: {message: ''}
+});
+
+export const refreshRequestListSuccess = requests => ({
+    type: REQUEST_TRACK_SUCCESS,
+    payload: {requests: requests}
+});
+
+export const refreshRequestListFailure = error => ({
+    type: REQUEST_TRACK_FAILURE,
     payload: {error}
 });

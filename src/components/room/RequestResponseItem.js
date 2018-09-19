@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar/Avatar";
-import FolderIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import {auth} from "../../Client";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction/ListItemSecondaryAction";
@@ -45,11 +44,9 @@ class RequestResponseItem extends React.Component {
                 primary={req.songTitle + ' - ' + req.songArtist}
                 secondary={this.state.secondary ? 'Requested by: ' + auth().currentUser.displayName : null}
             />
-            <ListItemSecondaryAction > /*TODO set the margin to show btn*/
-                <IconButton aria-label="Delete" value={false} onClick={this.handleRequestResponse.bind(this)}>
-                    <DeleteIcon />
-                </IconButton>
-            </ListItemSecondaryAction>
+            <IconButton aria-label="Delete" value={false} onClick={this.handleRequestResponse.bind(this)}>
+                <DeleteIcon />
+            </IconButton>
             <ListItemSecondaryAction>
                 <IconButton aria-label="Approve" value={true} onClick={this.handleRequestResponse.bind(this)}>
                     <ApproveIcon />

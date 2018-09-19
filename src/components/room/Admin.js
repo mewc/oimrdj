@@ -5,6 +5,7 @@ import * as str from "../../static/Strings";
 import TextField from "@material-ui/core/TextField/TextField";
 import {changeRoomName, changeTimoutValue} from "../../actions/roomActions";
 import RequestResponseList from "./RequestResponseList";
+import {refreshRequestList} from "../../actions/requestActions";
 
 class Admin extends React.Component {
 
@@ -23,6 +24,8 @@ class Admin extends React.Component {
             },
             isAdmin: true,
         };
+        this.props.dispatch(refreshRequestList(props.room.code))
+
     }
 
 
