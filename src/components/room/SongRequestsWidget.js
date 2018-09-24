@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {LABEL_APPROVED_TRACKS} from "../../static/Strings";
 import RefreshIcon from "@material-ui/icons/Refresh";
-import {refreshRequestList} from "../../actions/requestActions";
+import { refreshRequestList } from "../../actions/requestActions";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import SongChip from './SongChip';
 
@@ -24,7 +24,7 @@ const styles = theme => ({
     },
 });
 
-class ApprovedSongWidget extends React.Component {
+class SongRequestsWidget extends React.Component {
 
     constructor(props){
         super(props);
@@ -56,7 +56,9 @@ class ApprovedSongWidget extends React.Component {
                         Object.keys(requests).map((key, req) => {
                             let data = requests[key];
                             //only allow track that haven't been decided on yet to show
-                        return((data.isApproved !== undefined && data.isApproved)?<SongChip data={data} key={key}/> : '')
+                        return((data.isApproved !== undefined && data.isApproved)?
+                            <SongChip data={data} key={key}/> :
+                            '')
                       })
 
                     }
@@ -78,4 +80,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps)(withStyles(styles)(ApprovedSongWidget));
+export default connect(mapStateToProps)(withStyles(styles)(SongRequestsWidget));

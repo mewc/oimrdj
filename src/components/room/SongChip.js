@@ -3,8 +3,9 @@ import {connect} from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
 import PersonIcon from '@material-ui/icons/Person';
-import PlayIcon from '@material-ui/icons/PlayArrow';
+// import PlayIcon from '@material-ui/icons/PlayArrow';
 import {Avatar, Chip} from '@material-ui/core/';
+import {removeRequest} from "../../actions/requestActions";
 
 
 const styles = theme => ({
@@ -15,6 +16,7 @@ const styles = theme => ({
 
 class SongChip extends React.Component {
 
+    //must pass in a prop called data which is for a song.
     constructor(props){
         super(props);
         this.state = {
@@ -27,18 +29,23 @@ class SongChip extends React.Component {
         console.log(songId)
     }
 
+    handleDeleteRequest(){
+        this.props.dispatch(removeRequest(this.props.data, this.props.roomCode));
+    }
+
     render() {
-        const {classes, requests} = this.props;
+        const {classes} = this.props;
         const label = this.props.data.songTitle + ' - ' + this.props.data.songArtist
 
         return <Chip
             className={classes.chip}
             label={label}
             // onDelete={() => this.handlePlayPreview(this.props.data.spotifyId)}
+            onDelete={() => this.handleDeleteRequest()}
             // deleteIcon={<PlayIcon />}
             variant={'primary'}
             avatar={<Avatar><PersonIcon /></Avatar>}
-            />
+            />;
     }
 }
 
@@ -47,6 +54,7 @@ class SongChip extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
+        roomCode: state.room.code,
     };
 }
 

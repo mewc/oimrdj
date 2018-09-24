@@ -1,4 +1,7 @@
 import {
+    REMOVE_REQUEST_BEGIN,
+    REMOVE_REQUEST_FAILURE,
+    REMOVE_REQUEST_SUCCESS,
     REQUEST_TRACK_BEGIN,
     REQUEST_TRACK_FAILURE,
     REQUEST_TRACK_SUCCESS, RESPOND_REQUEST_BEGIN, RESPOND_REQUEST_FAILURE,
@@ -155,3 +158,35 @@ export const refreshRequestListFailure = error => ({
     type: REQUEST_TRACK_FAILURE,
     payload: {error}
 });
+
+
+export function removeRequest(song, roomCode) {
+    return dispatch => {
+        dispatch(removeRequestBegin());
+        db.ref('/requests/' + roomCode + '/' + song.spotifyId)
+            .remove()
+            .then(() => {
+                dispatch(removeRequestSuccess());
+                dispatch(refreshRequestList(roomCode));
+            })
+            .catch((err) => {
+                dispatch(removeRequestFailure(err));
+            });
+    }
+}
+
+export const removeRequestBegin = () => ({
+    type: REMOVE_REQUEST_BEGIN,
+    payload: {message: ''}
+});
+
+export const removeRequestSuccess = () => ({
+    type: REMOVE_REQUEST_SUCCESS,
+});
+
+export const removeRequestFailure = error => ({
+    type: REMOVE_REQUEST_FAILURE,
+    payload: {error}
+});
+
+

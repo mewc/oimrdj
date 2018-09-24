@@ -34,7 +34,12 @@ import {
     SEARCH_TRACK_SUCCESS,
     REQUEST_TRACK_SUCCESS,
     REQUEST_TRACK_FAILURE,
-    REQUEST_TRACK_BEGIN, FETCH_ROOMREQ_BEGIN, FETCH_ROOMREQ_FAILURE, FETCH_ROOMREQ_SUCCESS
+    REQUEST_TRACK_BEGIN,
+    FETCH_ROOMREQ_BEGIN,
+    FETCH_ROOMREQ_FAILURE,
+    FETCH_ROOMREQ_SUCCESS,
+    REMOVE_REQUEST_BEGIN,
+    REMOVE_REQUEST_FAILURE, REMOVE_REQUEST_SUCCESS
 } from "../actions/indexActions";
 import {LABEL_LOBBY} from "../static/Strings";
 
@@ -83,6 +88,7 @@ export default function reducer(state = defaultState, action) {
         case SEARCH_TRACK_BEGIN:
         case REQUEST_TRACK_BEGIN:
         case FETCH_ROOMREQ_BEGIN:
+        case REMOVE_REQUEST_BEGIN:
             return {
                 ...state,
                 loading: true,
@@ -101,6 +107,7 @@ export default function reducer(state = defaultState, action) {
         case SEARCH_TRACK_FAILURE:
         case REQUEST_TRACK_FAILURE:
         case FETCH_ROOMREQ_FAILURE:
+        case REMOVE_REQUEST_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -202,6 +209,12 @@ export default function reducer(state = defaultState, action) {
                 message: '',
 
             };
+        case REMOVE_REQUEST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                message: '',
+            }
         default:
             return state;
     }
