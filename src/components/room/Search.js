@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 import * as str from "../../static/Strings";
 import {searchTrack} from "../../actions/spotifyActions";
 import SearchResultsGrid from "./SearchResultsGrid";
-import {CircularProgress} from '@material-ui/core';
+import {LinearProgress} from '@material-ui/core';
 
 
 
@@ -71,7 +71,7 @@ class Search extends React.Component {
                     }
                 }}
             />
-            {(this.props.loading)?<CircularProgress />:''}
+            {(this.props.loading)?<LinearProgress variant={'query'} />:''}
             {(this.props.spotify)?this.props.spotify.length + ' results':''}
             {(this.props.spotify)?<SearchResultsGrid />:''}
 
