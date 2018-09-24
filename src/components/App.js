@@ -10,7 +10,6 @@ import JoinRoom from './JoinRoom';
 import Start from './Start';
 
 import {loginUser} from '../actions/authActions';
-import Snackbar from "./Snackbar";
 import {isBrowser} from "react-device-detect";
 
 
@@ -39,7 +38,6 @@ class App extends Component {
                             <Start/>
                         }
                     </div>
-                <Snackbar />
             </div>
         );
     }

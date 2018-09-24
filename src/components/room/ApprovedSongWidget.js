@@ -5,11 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import RequestResponseItem from "./RequestResponseItem";
-import {LABEL_PENDING_REQUESTS} from "../../static/Strings";
+import {LABEL_APPROVED_TRACKS} from "../../static/Strings";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import {refreshRequestList} from "../../actions/requestActions";
 import IconButton from "@material-ui/core/IconButton/IconButton";
+import SongChip from './SongChip';
 
 const styles = theme => ({
     root: {
@@ -24,7 +24,7 @@ const styles = theme => ({
     },
 });
 
-class RequestResponseList extends React.Component {
+class ApprovedSongWidget extends React.Component {
 
     constructor(props){
         super(props);
@@ -45,7 +45,7 @@ class RequestResponseList extends React.Component {
             <Typography>{this.props.requests.length}</Typography>
         <Grid item xs={12} md={6}>
             <Typography variant="title" className={classes.title}>
-                {LABEL_PENDING_REQUESTS}
+                {LABEL_APPROVED_TRACKS}
                 <IconButton aria-label="Approve" value={true} onClick={this.refreshPendingRequestList.bind(this)}>
                 <RefreshIcon />
                 </IconButton>
@@ -56,7 +56,7 @@ class RequestResponseList extends React.Component {
                         Object.keys(requests).map((key, req) => {
                             let data = requests[key];
                             //only allow track that haven't been decided on yet to show
-                        return((data.isApproved === undefined)?<RequestResponseItem data={data} key={key}/> : '')
+                        return((data.isApproved !== undefined && data.isApproved)?<SongChip data={data} key={key}/> : '')
                       })
 
                     }
@@ -73,10 +73,9 @@ const mapStateToProps = (state) => {
     return {
         loading: state.loading,
         requests: state.requests,
-        roomCode: state.room.code
     };
 }
 
 
 
-export default connect(mapStateToProps)(withStyles(styles)(RequestResponseList));
+export default connect(mapStateToProps)(withStyles(styles)(ApprovedSongWidget));

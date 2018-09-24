@@ -89,16 +89,16 @@ export function respondToRequest(song, roomCode, response) {
         let songToApprove = {
             ...song,
             isApproved: response, //boolean
-            approvedTimestamp: new Date().getMilliseconds(),
+            approvedTimestamp: new Date().getTime(),
         };
 
-        db.ref('/requests/' + roomCode + '/' + song.id).set(songToApprove)
-            .then((result) => {
+        db.ref('/requests/' + roomCode + '/' + song.spotifyId).set(songToApprove)
+            .then(() => {
                 console.log('song request response success');
-                console.log(result);
                 dispatch(respondToRequestSuccess(songToApprove));
                 dispatch(showSnackbar( songToApprove.songTitle + ' by ' + songToApprove.songArtist + (response)?' accepted':' ignored'));
 
+                dispatch(refreshRequestList(roomCode));
             })
             .catch((err) => {
                 console.log('song request response failure');
@@ -130,7 +130,6 @@ export function refreshRequestList(code) {
         dispatch(fetchRoomRequestsBegin());
         db.ref('/requests/' + code).once('value', function (snapshot) {
             let roomRequests = snapshot.val();
-            console.log(roomRequests);
             if(!snapshot.exists()){
                 console.log('no requests for room');
                 dispatch(fetchRoomRequestsFailure(''));

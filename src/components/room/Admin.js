@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 import {changeRoomName, changeTimoutValue} from "../../actions/roomActions";
 import RequestResponseList from "./RequestResponseList";
 import {refreshRequestList} from "../../actions/requestActions";
+import ApprovedSongWidget from './ApprovedSongWidget'
 
 class Admin extends React.Component {
 
@@ -127,9 +128,16 @@ class Admin extends React.Component {
                         }}
                     />
                 </li>
-                <li>
-                    <RequestResponseList />
-                </li>
+                {(this.props.hasRequests)?
+                <React.Fragment>
+                    <li>
+                        <RequestResponseList />
+                    </li>
+                    <li>
+                        <ApprovedSongWidget />
+                    </li>
+                </React.Fragment>
+                :''}
             </ul>
 
             <Profile/>
@@ -139,10 +147,14 @@ class Admin extends React.Component {
 
 
 const mapStateToProps = (state) => {
+    console.log(state.requests === undefined);
+    console.log(state.requests.length);
+    let hasRequests = !!(state.requests.length === undefined);
     return {
         message: state.message,
         loading: state.loading,
         room: state.room,
+        hasRequests: hasRequests,
     }
 }
 

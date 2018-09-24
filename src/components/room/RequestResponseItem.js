@@ -11,6 +11,7 @@ import ApproveIcon from "@material-ui/icons/Done";
 import DeleteIcon from "@material-ui/icons/Delete";
 import PersonIcon from "@material-ui/icons/Person";
 import PlayIcon from "@material-ui/icons/PlayArrow";
+import {respondToRequest} from "../../actions/requestActions";
 
 
 
@@ -27,6 +28,11 @@ class RequestResponseItem extends React.Component {
 
     handleRequestResponse(response){
         console.log(response);
+        console.log(this.props.data);
+        this.props.dispatch(respondToRequest(
+            this.props.data,
+            this.props.code,
+            response))
     }
 
     playTrackPreview(){
@@ -74,6 +80,7 @@ class RequestResponseItem extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
+        code: state.room.code
     }
 }
 

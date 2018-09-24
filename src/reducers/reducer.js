@@ -151,12 +151,14 @@ export default function reducer(state = defaultState, action) {
         case SWITCH_TAB:
             return {
                 ...state,
+                loading: false,
                 roomTab: action.payload.roomTab,
                 message: action.payload.message,
             };
         case CHANGE_ROOM_NAME_SUCCESS:
             return {
                 ...state,
+                loading: false,
                 room: {
                     ...state.room,
                     name: action.payload.newName
@@ -166,6 +168,7 @@ export default function reducer(state = defaultState, action) {
         case CHANGE_TIMEOUT_SUCCESS:
             return {
                 ...state,
+                loading: false,
                 room: {
                     ...state.room,
                     timeout: action.payload.newTimeout,
@@ -175,22 +178,29 @@ export default function reducer(state = defaultState, action) {
         case GET_TRACK_SUCCESS:
             return {
                 ...state,
+                loading: false,
                 message: '',
             };
         case SEARCH_TRACK_SUCCESS:
             return {
                 ...state,
+                loading: false,
                 spotify: action.payload.items,
                 message: '',
             };
         case REQUEST_TRACK_SUCCESS:
             return {
                 ...state,
+                loading: false,
+                message: '',
             };
         case FETCH_ROOMREQ_SUCCESS:
             return {
                 ...state,
-                requests: action.payload.requests
+                loading: false,
+                requests: action.payload.requests,
+                message: '',
+
             };
         default:
             return state;

@@ -89,7 +89,6 @@ export function findRoom(code) {
                 dispatch(fetchRoomRequestsBegin());
                 db.ref('/requests/' + code).once('value', function (snapshot) {
                     let roomRequests = snapshot.val();
-                    console.log(roomRequests);
                     if(!snapshot.exists()){
                         console.log('no requests for room');
                         dispatch(fetchRoomRequestsFailure(''));
