@@ -24,7 +24,7 @@ export function searchTrack(input) {
 
 
                 let searchLog = {
-                    [auth().currentUser.uid]: new Date().getMilliseconds(),
+                    [auth().currentUser.uid]: new Date().getTime(),
                 }
                 db.ref('/searches/' + input).set(searchLog)
                     .then(() => {
