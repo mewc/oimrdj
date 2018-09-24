@@ -29,13 +29,13 @@ class SongChip extends React.Component {
 
     render() {
         const {classes, requests} = this.props;
-        const label = this.props.data.songTitle + ' ' + this.props.data.songArtist
+        const label = this.props.data.songTitle + ' - ' + this.props.data.songArtist
 
         return <Chip
             className={classes.chip}
             label={label}
-            onDelete={() => this.handlePlayPreview(this.props.data.spotifyId)}
-            deleteIcon={<PlayIcon />}
+            // onDelete={() => this.handlePlayPreview(this.props.data.spotifyId)}
+            // deleteIcon={<PlayIcon />}
             variant={'primary'}
             avatar={<Avatar><PersonIcon /></Avatar>}
             />

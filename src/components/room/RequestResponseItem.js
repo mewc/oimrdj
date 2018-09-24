@@ -60,9 +60,9 @@ class RequestResponseItem extends React.Component {
                 primary={req.songTitle + ' - ' + req.songArtist}
                 secondary={this.state.secondary ? 'Requested by: ' + auth().currentUser.displayName : null}
             />
-            <IconButton aria-label="Play" onClick={this.playTrackPreview.bind(this)}>
-                <PlayIcon />
-            </IconButton>
+            {/*<IconButton aria-label="Play" onClick={this.playTrackPreview.bind(this)}>*/}
+                {/*<PlayIcon />*/}
+            {/*</IconButton>*/}
             <IconButton aria-label="Delete" value={false} onClick={() => this.handleRequestResponse(false)}>
                 <DeleteIcon />
             </IconButton>
