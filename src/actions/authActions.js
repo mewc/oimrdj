@@ -129,6 +129,8 @@ export function recogniseLogin() {
         }
 
         let userData = auth().currentUser;
+        console.log(userData);
+        console.log(auth().currentUser);
         let user = {
             uid: userData.uid,
             email: userData.email,
@@ -150,7 +152,7 @@ export const recogniseLoginBegin = () => ({
 
 export const recogniseLoginSuccess = user => ({
     type: RECOGNISE_LOGIN_SUCCESS,
-    payload: {user}
+    payload: user
 });
 
 export const recogniseLoginFailure = error => ({

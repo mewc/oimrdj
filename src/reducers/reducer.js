@@ -122,8 +122,8 @@ export default function reducer(state = defaultState, action) {
                 error: action.payload.error,
                 message: '',
             };
-        case LOGIN_SUCCESS:
-        case RECOGNISE_LOGIN_SUCCESS:
+        case LOGIN_SUCCESS: //for scratch login
+        case RECOGNISE_LOGIN_SUCCESS: //for persistent login
             return {
                 ...state,
                 loading: false,

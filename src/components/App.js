@@ -9,7 +9,7 @@ import Room from './room/Room';
 import JoinRoom from './JoinRoom';
 import Start from './Start';
 
-import {loginUser} from '../actions/authActions';
+import {loginUser, recogniseLogin} from '../actions/authActions';
 import {isBrowser} from "react-device-detect";
 import Snackbar from "./Snackbar";
 
@@ -24,7 +24,7 @@ class App extends Component {
         super(props);
         this.props.dispatch(loadApp());
         this.state = {
-            render: <LoadApp />
+            startRender: <LoadApp />
         };
         auth().onAuthStateChanged((user) => {
             if(user){
@@ -32,19 +32,26 @@ class App extends Component {
                 this.setState((state, props) => {
                     return {
                         ...state,
-                        startRender: (user) ?
+                        startRender: <JoinRoom/>
                             //TODO persistence of room joining/leaving (props saving)
-                            <JoinRoom/>
-                            :
-                            <Start/>
+
+                    }
+                });
+                this.props.dispatch(loadAppSuccess());
+                this.props.dispatch(recogniseLogin());
+
+            }else{
+                //TODO remove for prod. Auto signs in oh <Start/>
+                // this.props.dispatch(loginUser(user));
+                this.setState((state, props) => {
+                    return {
+                        ...state,
+                        startRender: <Start/>
                     }
                 });
                 this.props.dispatch(loadAppSuccess());
 
-            }else{
-                this.props.dispatch(loginUser(user));
             }
-            //TODO remove this for poroduction
         });
 
         (isBrowser)?console.log('is browser'):console.log('is mobile!');
