@@ -39,7 +39,7 @@ import {
     FETCH_ROOMREQ_FAILURE,
     FETCH_ROOMREQ_SUCCESS,
     REMOVE_REQUEST_BEGIN,
-    REMOVE_REQUEST_FAILURE, REMOVE_REQUEST_SUCCESS
+    REMOVE_REQUEST_FAILURE, REMOVE_REQUEST_SUCCESS, LOAD_APP_SUCCESS, LOAD_APP_BEGIN
 } from "../actions/indexActions";
 import {LABEL_LOBBY} from "../static/Strings";
 
@@ -89,6 +89,7 @@ export default function reducer(state = defaultState, action) {
         case REQUEST_TRACK_BEGIN:
         case FETCH_ROOMREQ_BEGIN:
         case REMOVE_REQUEST_BEGIN:
+        case LOAD_APP_BEGIN:
             return {
                 ...state,
                 loading: true,
@@ -182,23 +183,11 @@ export default function reducer(state = defaultState, action) {
                     message: '',
                 }
             };
-        case GET_TRACK_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                message: '',
-            };
         case SEARCH_TRACK_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 spotify: action.payload.items,
-                message: '',
-            };
-        case REQUEST_TRACK_SUCCESS:
-            return {
-                ...state,
-                loading: false,
                 message: '',
             };
         case FETCH_ROOMREQ_SUCCESS:
@@ -207,14 +196,16 @@ export default function reducer(state = defaultState, action) {
                 loading: false,
                 requests: action.payload.requests,
                 message: '',
-
             };
+        case REQUEST_TRACK_SUCCESS:
         case REMOVE_REQUEST_SUCCESS:
+        case GET_TRACK_SUCCESS:
+        case LOAD_APP_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 message: '',
-            }
+            };
         default:
             return state;
     }

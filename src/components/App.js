@@ -13,30 +13,53 @@ import {loginUser} from '../actions/authActions';
 import {isBrowser} from "react-device-detect";
 import Snackbar from "./Snackbar";
 
+import LoadApp from './LoadApp';
+import {loadApp, loadAppSuccess} from "../actions/actions";
+
+
 
 class App extends Component {
 
     constructor(props){
         super(props);
+        this.props.dispatch(loadApp());
+        this.state = {
+            render: <LoadApp />
+        };
         auth().onAuthStateChanged((user) => {
-            this.props.dispatch(loginUser(user));
+            if(user){
+                console.log(user.displayName + ' is logged in');
+                this.setState((state, props) => {
+                    return {
+                        ...state,
+                        startRender: (user) ?
+                            //TODO persistence of room joining/leaving (props saving)
+                            <JoinRoom/>
+                            :
+                            <Start/>
+                    }
+                });
+                this.props.dispatch(loadAppSuccess());
+
+            }else{
+                this.props.dispatch(loginUser(user));
+            }
             //TODO remove this for poroduction
         });
+
         (isBrowser)?console.log('is browser'):console.log('is mobile!');
     }
+
 
     render() {
         document.title = this.props.title + ' ' + this.props.message;
         return (
             <div className="App">
                     <div>
-                        {(this.props.user.email) ?
-                            (this.props.room) ?
-                                <Room/>
-                                :
-                                <JoinRoom/>
+                        {(this.props.room) ?
+                            <Room/>
                             :
-                            <Start/>
+                            this.state.startRender
                         }
                     </div>
                 <Snackbar />

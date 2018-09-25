@@ -1,5 +1,7 @@
 //GENERAL action.js
 export const SNACKBAR = 'SNACKBAR';
+export const LOAD_APP_BEGIN = 'LOAD_APP_BEGIN';
+export const LOAD_APP_SUCCESS = 'LOAD_APP_SUCCESS';
 
 //ROOM actions
 
