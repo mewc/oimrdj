@@ -7,7 +7,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import {Avatar, Chip} from '@material-ui/core/';
 import {removeRequest} from "../../actions/requestActions";
 import {showSnackbar} from "../../actions/actions";
-import GridListTile from "@material-ui/core/GridListTile/GridListTile";
 
 
 const styles = theme => ({

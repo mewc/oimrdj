@@ -9,7 +9,7 @@ import Room from './room/Room';
 import JoinRoom from './JoinRoom';
 import Start from './Start';
 
-import {loginUser, recogniseLogin} from '../actions/authActions';
+import {recogniseLogin} from '../actions/authActions';
 import {isBrowser} from "react-device-detect";
 import Snackbar from "./Snackbar";
 

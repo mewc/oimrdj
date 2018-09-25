@@ -67,6 +67,7 @@ class SongRequestsWidget extends React.Component {
                                     output = ((k === this.props.user.uid) ?
                                         output = <SongChip data={data} key={key} isAdmin={this.props.isAdmin}/> :
                                         '');
+                                    return '';
                                 });
                             }else{
                                 output = ((data.isApproved !== undefined && data.isApproved)?

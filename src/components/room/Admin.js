@@ -5,7 +5,6 @@ import * as str from "../../static/Strings";
 import TextField from "@material-ui/core/TextField/TextField";
 import {changeRoomName, changeTimoutValue} from "../../actions/roomActions";
 import RequestResponseList from "./RequestResponseList";
-import {refreshRequestList} from "../../actions/requestActions";
 import ApprovedSongWidget from './SongRequestsWidget'
 
 class Admin extends React.Component {
