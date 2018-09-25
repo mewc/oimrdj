@@ -46,9 +46,8 @@ export function submitRequest(song, roomCode) {
         };
 
         db.ref('/requests/' + roomCode + '/' + song.id).set(songToRequest)
-            .then((result) => {
+            .then(() => {
                 console.log('song request success');
-                console.log(result);
                 dispatch(submitRequestSuccess(songToRequest));
                 dispatch(showSnackbar(  songToRequest.songTitle + ' by ' + songToRequest.songArtist + ' requested'));
 

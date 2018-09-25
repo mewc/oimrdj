@@ -10,7 +10,6 @@ import Admin from './Admin';
 import History from './History';
 import Saved from './Saved';
 import Profile from "./Profile";
-import Snackbar from "../Snackbar";
 
 
 class Room extends Component {
@@ -51,7 +50,6 @@ class Room extends Component {
                     <h1>Welcome to: {this.props.room.name} </h1>
                     <h2>{this.props.room.code} </h2>
                     {this.tabRender(this.props.roomTab)}
-                    <Snackbar />
                     <RoomBottomNav isAdmin={this.state.isAdmin}/>
                 </div>
             </div>

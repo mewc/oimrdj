@@ -37,6 +37,7 @@ export function loginUser() {
                     const userData = result.user;
 
                     let user = {
+                        uid: userData.uid,
                         email: userData.email,
                         name: userData.displayName,
                         photoUrl: userData.photoURL,

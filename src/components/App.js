@@ -11,6 +11,7 @@ import Start from './Start';
 
 import {loginUser} from '../actions/authActions';
 import {isBrowser} from "react-device-detect";
+import Snackbar from "./Snackbar";
 
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
                             <Start/>
                         }
                     </div>
+                <Snackbar />
             </div>
         );
     }

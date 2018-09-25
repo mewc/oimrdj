@@ -12,7 +12,7 @@ class History extends React.Component {
 
         return <React.Fragment>
             <p>history</p>
-            <SongRequestsWidget />
+            <SongRequestsWidget userOnly={true}/>
         </React.Fragment>;
     }
 }

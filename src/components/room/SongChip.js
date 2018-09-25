@@ -6,6 +6,7 @@ import PersonIcon from '@material-ui/icons/Person';
 // import PlayIcon from '@material-ui/icons/PlayArrow';
 import {Avatar, Chip} from '@material-ui/core/';
 import {removeRequest} from "../../actions/requestActions";
+import {showSnackbar} from "../../actions/actions";
 
 
 const styles = theme => ({
@@ -30,13 +31,16 @@ class SongChip extends React.Component {
     }
 
     handleDeleteRequest(){
-        this.props.dispatch(removeRequest(this.props.data, this.props.roomCode));
+        if(this.props.data.isApproved !== undefined && this.props.data.isApproved){
+            this.props.dispatch(showSnackbar('Song is approved, can\'t remove'));
+        }else{
+            this.props.dispatch(removeRequest(this.props.data, this.props.roomCode));
+        }
     }
 
     render() {
         const {classes} = this.props;
         const label = this.props.data.songTitle + ' - ' + this.props.data.songArtist
-
         return <Chip
             className={classes.chip}
             label={label}

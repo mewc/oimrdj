@@ -31,3 +31,4 @@ export const FOOTER_COPYRIGHT = "oimrdj pty ltd";
 export const LABEL_LOBBY = "Room Lobby";
 export const LABEL_PENDING_REQUESTS = "Pending Requests";
 export const LABEL_APPROVED_TRACKS = "Approved Tracks";
+export const LABEL_MY_REQUESTS = "My Requests";
