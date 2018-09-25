@@ -65,12 +65,12 @@ class SongRequestsWidget extends React.Component {
                             if(this.props.userOnly && data.submittedBy !== undefined){
                                 Object.keys(data.submittedBy).map((k, v) => {
                                     output = ((k === this.props.user.uid) ?
-                                        output = <SongChip data={data} key={key}/> :
+                                        output = <SongChip data={data} key={key} isAdmin={this.props.isAdmin}/> :
                                         '');
                                 });
                             }else{
                                 output = ((data.isApproved !== undefined && data.isApproved)?
-                                    <SongChip data={data} key={key}/> :
+                                    <SongChip data={data} key={key} isAdmin={this.props.isAdmin}/> :
                                     '');
                             }
                             return output;
@@ -88,10 +88,13 @@ class SongRequestsWidget extends React.Component {
 
 
 const mapStateToProps = (state) => {
+    //TODO support multiple admins?
+    let isAdmin = !!(state.room.owner[state.user.uid]);
     return {
         loading: state.loading,
         requests: state.requests,
-        user: state.user
+        user: state.user,
+        isAdmin: isAdmin,
     };
 }
 

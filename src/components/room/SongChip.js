@@ -19,6 +19,7 @@ const styles = theme => ({
 class SongChip extends React.Component {
 
     //must pass in a prop called data which is for a song.
+
     constructor(props){
         super(props);
         this.state = {
@@ -27,12 +28,12 @@ class SongChip extends React.Component {
         };
     }
 
-    handlePlayPreview(songId){
-        console.log(songId)
-    }
+    // handlePlayPreview(songId){
+    //     console.log(songId)
+    // }
 
     handleDeleteRequest(){
-        if(this.props.data.isApproved !== undefined && this.props.data.isApproved){
+        if(this.props.data.isApproved !== undefined && this.props.data.isApproved && !(this.props.isAdmin)){
             this.props.dispatch(showSnackbar('Song is approved, can\'t remove'));
         }else{
             this.props.dispatch(removeRequest(this.props.data, this.props.roomCode));

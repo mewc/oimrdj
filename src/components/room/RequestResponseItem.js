@@ -44,17 +44,21 @@ class RequestResponseItem extends React.Component {
         // /*get submitters profile photo, if midding show default person icon (or spotify cover?)*/
 
         const req = this.props.data;
+        let albumAvatar = req.img
+            ?<Avatar src={req.img.url} alt={req.songArtist + ' ' + req.songTitle}><PersonIcon/></Avatar>
+            :<Avatar><PersonIcon/></Avatar>;
+        let userAvatar = this.props.userImg
+            ?<Avatar src={this.props.userImg} alt={this.props.userName}><PersonIcon/></Avatar>
+            :<Avatar><PersonIcon/></Avatar>;
+
 
         return <ListItem>
             <ListItemAvatar>
-                <Avatar>
-                    <PersonIcon />
-                </Avatar>
+                {albumAvatar}
             </ListItemAvatar>
+            +
             <ListItemAvatar>
-                <Avatar>
-                    <PersonIcon />
-                </Avatar>
+                {userAvatar}
             </ListItemAvatar>
             <ListItemText
                 primary={req.songTitle + ' - ' + req.songArtist}
@@ -80,7 +84,9 @@ class RequestResponseItem extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
-        code: state.room.code
+        code: state.room.code,
+        userImg: state.user.photoUrl,
+        userName: state.user.name,
     }
 }
 
