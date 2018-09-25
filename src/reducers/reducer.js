@@ -39,7 +39,12 @@ import {
     FETCH_ROOMREQ_FAILURE,
     FETCH_ROOMREQ_SUCCESS,
     REMOVE_REQUEST_BEGIN,
-    REMOVE_REQUEST_FAILURE, REMOVE_REQUEST_SUCCESS, LOAD_APP_SUCCESS, LOAD_APP_BEGIN
+    REMOVE_REQUEST_FAILURE,
+    REMOVE_REQUEST_SUCCESS,
+    LOAD_APP_SUCCESS,
+    LOAD_APP_BEGIN,
+    RECOGNISE_LOGIN_BEGIN,
+    RECOGNISE_LOGIN_FAILURE, RECOGNISE_LOGIN_SUCCESS
 } from "../actions/indexActions";
 import {LABEL_LOBBY} from "../static/Strings";
 
@@ -90,6 +95,7 @@ export default function reducer(state = defaultState, action) {
         case FETCH_ROOMREQ_BEGIN:
         case REMOVE_REQUEST_BEGIN:
         case LOAD_APP_BEGIN:
+        case RECOGNISE_LOGIN_BEGIN:
             return {
                 ...state,
                 loading: true,
@@ -109,6 +115,7 @@ export default function reducer(state = defaultState, action) {
         case REQUEST_TRACK_FAILURE:
         case FETCH_ROOMREQ_FAILURE:
         case REMOVE_REQUEST_FAILURE:
+        case RECOGNISE_LOGIN_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -116,6 +123,7 @@ export default function reducer(state = defaultState, action) {
                 message: '',
             };
         case LOGIN_SUCCESS:
+        case RECOGNISE_LOGIN_SUCCESS:
             return {
                 ...state,
                 loading: false,

@@ -52,7 +52,13 @@ class App extends Component {
 
 
     render() {
-        document.title = this.props.title + ' ' + this.props.message;
+        let roomName = '';
+       try{
+           roomName = this.props.room.name + ' :: ';
+        }catch(e){
+           console.log('Not signed into room yet');
+       }
+        document.title = this.props.title + ' ' + roomName  + '  ' +  this.props.message;
         return (
             <div className="App">
                     <div>
@@ -65,10 +71,6 @@ class App extends Component {
                 <Snackbar />
             </div>
         );
-    }
-
-    openMessage(){
-        console.log('email info@mewc.info');
     }
 }
 
