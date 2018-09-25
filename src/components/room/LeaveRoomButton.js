@@ -18,9 +18,9 @@ class LeaveRoomButton extends React.Component {
     render() {
 
         return <React.Fragment>
-            <Button variant={'extendedFab'} aria-label={'Leave Room'}>
+            <Button variant={'extendedFab'} aria-label={'Leave Room'} onClick={this.handleLeaveRoomClick.bind(this)}>
                 Leave Room
-                <LeaveRoomIcon onClick={this.handleLeaveRoomClick.bind(this)}/>
+                <LeaveRoomIcon />
             </Button>
         </React.Fragment>
     }

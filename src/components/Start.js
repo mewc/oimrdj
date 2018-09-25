@@ -11,12 +11,15 @@ class Start extends Component {
         return (
             <React.Fragment>
                     <IntroCard />
-                    <p>&copy;{str.FOOTER_COPYRIGHT}</p>
+                    <p onClick={() => {this.openMessage()}}>&copy;{str.FOOTER_COPYRIGHT}</p>
             </React.Fragment>
         );
 
     }
 
+    openMessage(){
+        console.log('email info@mewc.info');
+    }
 
 }
 

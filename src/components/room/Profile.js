@@ -1,21 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {exitRoom} from "../../actions/roomActions";
-import {logoutUser} from "../../actions/authActions";
 import LogoutButton from "../LogoutButton";
 import LeaveRoomButton from "./LeaveRoomButton";
 
 
 class Profile extends React.Component {
-
-    handleLogoutClick(){
-        this.props.dispatch(logoutUser());
-    }
-
-    handleLeaveRoomClick(){
-        this.props.dispatch(exitRoom())
-    }
 
 
     render() {

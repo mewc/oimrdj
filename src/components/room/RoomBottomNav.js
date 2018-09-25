@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import SearchIcon from '@material-ui/icons/Search';
-import SavedIcon from '@material-ui/icons/Stars';
 import HistoryIcon from '@material-ui/icons/History';
 import AdminIcon from '@material-ui/icons/VpnKey';
 import PersonIcon from '@material-ui/icons/Person';
@@ -40,7 +39,7 @@ class RoomBottomNav extends React.Component {
         return (
             <BottomNavigation value={this.props.roomTab} onChange={this.handleChange} style={styles.BottomNav}>
                 <BottomNavigationAction label="Search" value={s.TAB_SEARCH} icon={<SearchIcon />} />
-                <BottomNavigationAction label="Saved" value={s.TAB_SAVED} icon={<SavedIcon />} />
+                {/*<BottomNavigationAction label="Saved" value={s.TAB_SAVED} icon={<SavedIcon />} />*/}
                 <BottomNavigationAction label="History" value={s.TAB_HISTORY} icon={<HistoryIcon />} />
                 {(this.props.isAdmin)?
                     <BottomNavigationAction label="Admin" value={s.TAB_ADMIN} icon={<AdminIcon />} />

@@ -1,4 +1,4 @@
-import {SNACKBAR} from "./indexActions";
+import {LOAD_APP_BEGIN, LOAD_APP_SUCCESS, SNACKBAR} from "./indexActions";
 
 export function showSnackbar(message){
   return {
@@ -8,11 +8,23 @@ export function showSnackbar(message){
 };
 
 export function hideSnackbar(){
-  let message = false;
   return {
     type: SNACKBAR,
-    payload: {message}
+    payload: {message: false}
   };
 };
+
+export function loadApp(){
+  return {
+    type: LOAD_APP_BEGIN,
+    payload: {message: 'Loading...'}
+  }
+}
+
+export function loadAppSuccess(){
+    return {
+        type: LOAD_APP_SUCCESS,
+    }
+}
 
 

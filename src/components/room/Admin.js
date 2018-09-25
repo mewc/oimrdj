@@ -4,7 +4,9 @@ import Profile from "./Profile";
 import * as str from "../../static/Strings";
 import TextField from "@material-ui/core/TextField/TextField";
 import {changeRoomName, changeTimoutValue} from "../../actions/roomActions";
-
+import RequestResponseList from "./RequestResponseList";
+import {refreshRequestList} from "../../actions/requestActions";
+import ApprovedSongWidget from './SongRequestsWidget'
 
 class Admin extends React.Component {
 
@@ -23,6 +25,8 @@ class Admin extends React.Component {
             },
             isAdmin: true,
         };
+        this.props.dispatch(refreshRequestList(props.room.code))
+
     }
 
 
@@ -107,7 +111,6 @@ class Admin extends React.Component {
                     />
                 </li>
                 <li>
-
                     <TextField
                         label={str.LABEL_ROOM_TIMEOUT + ':'}
                         InputLabelProps={{
@@ -125,6 +128,16 @@ class Admin extends React.Component {
                         }}
                     />
                 </li>
+                {(this.props.hasRequests)?
+                <React.Fragment>
+                    <li>
+                        <RequestResponseList />
+                    </li>
+                    <li>
+                        <ApprovedSongWidget />
+                    </li>
+                </React.Fragment>
+                :''}
             </ul>
 
             <Profile/>
@@ -134,10 +147,12 @@ class Admin extends React.Component {
 
 
 const mapStateToProps = (state) => {
+    let hasRequests = !!(state.requests.length === undefined);
     return {
         message: state.message,
         loading: state.loading,
         room: state.room,
+        hasRequests: hasRequests,
     }
 }
 

@@ -38,3 +38,5 @@ build/
 DEVNOTES\.md
 
 src/static/oimrdj-oimrdj-215b46df0a1b\.json
+
+\.env

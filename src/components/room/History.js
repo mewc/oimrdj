@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import SongRequestsWidget from "./SongRequestsWidget";
 
 
 
@@ -9,7 +10,10 @@ class History extends React.Component {
     render() {
 
 
-        return <p>history</p>;
+        return <React.Fragment>
+            <p>History</p>
+            <SongRequestsWidget userOnly={true}/>
+        </React.Fragment>;
     }
 }
 
