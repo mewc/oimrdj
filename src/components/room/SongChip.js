@@ -22,10 +22,24 @@ class SongChip extends React.Component {
 
     constructor(props){
         super(props);
+        let color = 'default';
+        let variant = 'default';
+        if(this.props.data.isApproved !== undefined ){
+            if(this.props.data.isApproved ){
+                color = 'primary';
+            }else{
+                color = 'secondary';
+            }
+        }else{
+            variant = 'outlined';
+        }
         this.state = {
             secondary: true,
             dense: false,
+            color: color,
+            variant: variant,
         };
+
     }
 
     // handlePlayPreview(songId){
@@ -54,7 +68,8 @@ class SongChip extends React.Component {
             // onDelete={() => this.handlePlayPreview(this.props.data.spotifyId)}
             onDelete={() => this.handleDeleteRequest()}
             // deleteIcon={<PlayIcon />}
-            variant={'primary'}
+            color={this.state.color}
+            variant={this.state.variant}
             avatar={avatar}
             />;
     }

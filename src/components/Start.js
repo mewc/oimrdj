@@ -3,15 +3,16 @@ import {connect} from 'react-redux';
 
 import * as str from "../static/Strings";
 
-import IntroCard from "./IntroCard";
+import SignIn from "./SignIn";
+import Typography from "@material-ui/core/Typography/Typography";
 
 
 class Start extends Component {
     render() {
         return (
             <React.Fragment>
-                    <IntroCard />
-                    <p onClick={() => {this.openMessage()}}>&copy;{str.FOOTER_COPYRIGHT}</p>
+                    <SignIn />
+                    <Typography  variant={'button'} onClick={() => {this.openMessage()}}>&copy;{' ' + str.FOOTER_COPYRIGHT}</Typography>
             </React.Fragment>
         );
 

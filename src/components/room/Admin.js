@@ -25,7 +25,6 @@ class Admin extends React.Component {
             },
             isAdmin: true,
         };
-        this.props.dispatch(refreshRequestList(props.room.code))
 
     }
 
@@ -89,6 +88,7 @@ class Admin extends React.Component {
     //admin has admin controls + all profile stuff too
     render() {
         return <React.Fragment>
+            <Profile/>
             <h3>Admin</h3>
             <p>{this.props.room.timeout}</p>
             <ul>
@@ -140,7 +140,6 @@ class Admin extends React.Component {
                 :''}
             </ul>
 
-            <Profile/>
         </React.Fragment>;
     }
 }

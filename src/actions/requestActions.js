@@ -53,7 +53,7 @@ export function submitRequest(song, roomCode) {
                 console.log('song request success');
                 dispatch(submitRequestSuccess(songToRequest));
                 dispatch(showSnackbar(  songToRequest.songTitle + ' by ' + songToRequest.songArtist + ' requested'));
-
+                dispatch(refreshRequestList(roomCode));
             })
             .catch((err) => {
                 console.log('song request fail');
@@ -102,7 +102,6 @@ export function respondToRequest(song, roomCode, response) {
                 console.log('song request response success');
                 dispatch(respondToRequestSuccess(songToApprove));
                 dispatch(showSnackbar( songToApprove.songTitle + ' by ' + songToApprove.songArtist + (response)?' accepted':' ignored'));
-
                 dispatch(refreshRequestList(roomCode));
             })
             .catch((err) => {
