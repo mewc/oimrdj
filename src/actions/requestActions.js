@@ -42,7 +42,10 @@ export function submitRequest(song, roomCode) {
             songTitle: song.name,
             submittedBy: {[auth().currentUser.uid]: true},
             timestamp: new Date().getTime(),
-            spotifyId: song.id
+            spotifyId: song.id,
+            previewUrl: song.preview_url,
+            img: song.album.images[0],
+
         };
 
         db.ref('/requests/' + roomCode + '/' + song.id).set(songToRequest)

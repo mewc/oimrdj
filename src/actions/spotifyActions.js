@@ -22,19 +22,18 @@ export function searchTrack(input) {
                 console.log(response.data.body.tracks);
                 dispatch(searchTrackSuccess(response.data.body.tracks));
 
-
+                //log search
                 let searchLog = {
                     [auth().currentUser.uid]: new Date().getTime(),
                 }
                 db.ref('/searches/' + input).set(searchLog)
-                    .then(() => {
-                        console.log('search log success');
-
-                    })
-                    .catch(() => {
-                        console.log('search log fail');
-
-                    });
+                    // .then(() => {
+                    //      console.log('search log success');
+                    // })
+                    // .catch(() => {
+                    //      console.log('search log fail');
+                    // }
+                    // );
 
             })
             .catch((err) => {

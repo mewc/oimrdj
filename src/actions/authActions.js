@@ -123,14 +123,11 @@ export function recogniseLogin() {
     return dispatch => {
         dispatch(recogniseLoginBegin());
 
-        console.log(auth().currentUser);
         if(!auth()){
             dispatch(recogniseLoginFailure({message: 'Something weird happened and credentials were not found'}));
         }
 
         let userData = auth().currentUser;
-        console.log(userData);
-        console.log(auth().currentUser);
         let user = {
             uid: userData.uid,
             email: userData.email,

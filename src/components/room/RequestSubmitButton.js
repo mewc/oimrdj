@@ -30,8 +30,7 @@ class RequestSubmitButton extends React.Component {
     render() {
 
         return <IconButton disabled={this.state.requested}
-                           onClick={this.handleRequestEvent.bind(this)} style={(this.state.requested)? {color: 'lightGreen'} : {color: 'white'}}
-                        onHover >
+                           onClick={this.handleRequestEvent.bind(this)} style={(this.state.requested)? {color: 'lightGreen'} : {color: 'white'}} >
             {(!this.state.requested)?((this.props.loading)?<LoadingSpinner/>:<SendIcon  />):<TickIcon/>}
         </IconButton>;
     }

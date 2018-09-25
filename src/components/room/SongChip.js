@@ -7,6 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import {Avatar, Chip} from '@material-ui/core/';
 import {removeRequest} from "../../actions/requestActions";
 import {showSnackbar} from "../../actions/actions";
+import GridListTile from "@material-ui/core/GridListTile/GridListTile";
 
 
 const styles = theme => ({
@@ -40,7 +41,12 @@ class SongChip extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const label = this.props.data.songTitle + ' - ' + this.props.data.songArtist
+        const label = this.props.data.songTitle + ' - ' + this.props.data.songArtist;
+        let avatar = this.props.data.img
+            ?<Avatar src={this.props.data.img.url} alt={this.props.data.songArtist + ' ' + this.props.data.songTitle}><PersonIcon/></Avatar>
+                :<Avatar><PersonIcon/></Avatar>;
+
+
         return <Chip
             className={classes.chip}
             label={label}
@@ -48,7 +54,7 @@ class SongChip extends React.Component {
             onDelete={() => this.handleDeleteRequest()}
             // deleteIcon={<PlayIcon />}
             variant={'primary'}
-            avatar={<Avatar><PersonIcon /></Avatar>}
+            avatar={avatar}
             />;
     }
 }
