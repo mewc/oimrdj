@@ -94,7 +94,7 @@ export const loginBegin = () => ({
 
 export const loginSuccess = user => ({
     type: LOGIN_SUCCESS,
-    payload: {user}
+    payload: {user},
 });
 
 export const loginFailure = error => ({
@@ -152,10 +152,10 @@ export const recogniseLoginBegin = () => ({
 
 export const recogniseLoginSuccess = user => ({
     type: RECOGNISE_LOGIN_SUCCESS,
-    payload: user
+    payload: {user},
 });
 
 export const recogniseLoginFailure = error => ({
     type: RECOGNISE_LOGIN_FAILURE,
-    payload: {error}
+    payload: {error},
 });
