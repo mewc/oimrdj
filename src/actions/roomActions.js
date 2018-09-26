@@ -21,7 +21,7 @@ import {
     EXIT_ROOM_FAILURE,
     ENTER_ROOM_FAILURE, FETCH_ROOMREQ_BEGIN, FETCH_ROOMREQ_SUCCESS, FETCH_ROOMREQ_FAILURE
 } from "./indexActions";
-import {showSnackbar} from "./actions";
+import {hideSnackbar, showSnackbar} from "./actions";
 
 const DEFAULT_ROOM = {
     code: null,
@@ -40,6 +40,9 @@ export function exitRoom(code) {
 
         dispatch(exitRoomSuccess(code));
         dispatch(showSnackbar( 'You just left - ' + code));
+        setTimeout(() => {
+            this.props.dispatch(hideSnackbar());
+        },4000);
 
     }
 };

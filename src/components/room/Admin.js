@@ -6,6 +6,9 @@ import TextField from "@material-ui/core/TextField/TextField";
 import {changeRoomName, changeTimoutValue} from "../../actions/roomActions";
 import RequestResponseList from "./RequestResponseList";
 import ApprovedSongWidget from './SongRequestsWidget'
+import {hideSnackbar, showSnackbar} from "../../actions/actions";
+import {NOTIF_CHANGE_TIMEOUT} from "../../static/Strings";
+import {NOTIF_CHANGE_ROOM_NAME} from "../../static/Strings";
 
 class Admin extends React.Component {
 
@@ -76,11 +79,19 @@ class Admin extends React.Component {
 
     handleNameChangeEvent = () => {
         this.props.dispatch(changeRoomName(this.state.nameChange.value, this.props.room.code));
+        this.props.dispatch(showSnackbar(NOTIF_CHANGE_ROOM_NAME + this.state.nameChange.value));
+        setTimeout(() => {
+            this.props.dispatch(hideSnackbar());
+        },4000);
     }
 
 
     handleTimeoutChangeEvent = () => {
         this.props.dispatch(changeTimoutValue(this.state.timeoutChange.value, this.props.room.code));
+        this.props.dispatch(showSnackbar(NOTIF_CHANGE_TIMEOUT + this.state.timeoutChange.value));
+        setTimeout(() => {
+            this.props.dispatch(hideSnackbar());
+        },4000);
     }
 
 
@@ -89,7 +100,6 @@ class Admin extends React.Component {
         return <React.Fragment>
             <Profile/>
             <h3>Admin</h3>
-            <p>{this.props.room.timeout}</p>
             <ul>
                 <li>
                     <TextField

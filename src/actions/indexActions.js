@@ -2,6 +2,8 @@
 export const SNACKBAR = 'SNACKBAR';
 export const LOAD_APP_BEGIN = 'LOAD_APP_BEGIN';
 export const LOAD_APP_SUCCESS = 'LOAD_APP_SUCCESS';
+export const REQUEST_TIMEOUT_ON = 'REQUEST_TIMEOUT_ON';
+export const REQUEST_TIMEOUT_OFF = 'REQUEST_TIMEOUT_OFF';
 
 //ROOM actions
 

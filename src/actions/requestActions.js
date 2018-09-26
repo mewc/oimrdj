@@ -10,7 +10,7 @@ import {
 
 
 import {db, auth} from "../Client";
-import {showSnackbar} from "./actions";
+import {hideSnackbar, showSnackbar} from "./actions";
 import {
     fetchRoomRequestsBegin,
     fetchRoomRequestsFailure,
@@ -102,6 +102,9 @@ export function respondToRequest(song, roomCode, response) {
                 console.log('song request response success');
                 dispatch(respondToRequestSuccess(songToApprove));
                 dispatch(showSnackbar( songToApprove.songTitle + ' by ' + songToApprove.songArtist + (response)?' accepted':' ignored'));
+                setTimeout(() => {
+                    this.props.dispatch(hideSnackbar());
+                },4000);
                 dispatch(refreshRequestList(roomCode));
             })
             .catch((err) => {

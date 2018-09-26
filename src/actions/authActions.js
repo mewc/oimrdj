@@ -11,7 +11,7 @@ import {
     LOGIN_FAILURE,
     RECOGNISE_LOGIN_BEGIN, RECOGNISE_LOGIN_SUCCESS, RECOGNISE_LOGIN_FAILURE
 } from "./indexActions";
-import {showSnackbar} from "./actions";
+import {hideSnackbar, showSnackbar} from "./actions";
 
 export function logoutUser() {
     return dispatch => {
@@ -60,18 +60,23 @@ export function loginUser() {
                         if (snapshot.exists()) {
                             dispatch(loginSuccess(user))
                             dispatch(showSnackbar('Logged in as ' + user.name));
+                            setTimeout(() => {
+                                this.props.dispatch(hideSnackbar());
+                            },4000);
                         } else {
                             //CREATE new user if not in system
                             db.ref('/users/' + id).set(user)
                                 .then((user) => {
                                     dispatch(loginSuccess(user));
                                     dispatch(showSnackbar('Logged in ' + user.name));
+                                    setTimeout(() => {
+                                        this.props.dispatch(hideSnackbar());
+                                    },4000);
                                 })
                                 .catch((error) => {
                                     console.log(error);
                                     dispatch(loginFailure(error));
                                 });
-                            ;
                         }
                     });
                     return userData;
@@ -121,7 +126,7 @@ export const logoutFailure = error => ({
 //if fb knows the user is logged in, we will save it to state here
 export function recogniseLogin() {
     return dispatch => {
-        dispatch(recogniseLoginBegin());
+        dispatch(recogniseLoginBegin({message: 'Welcome back. Logging you back in'}));
 
         if(!auth()){
             dispatch(recogniseLoginFailure({message: 'Something weird happened and credentials were not found'}));

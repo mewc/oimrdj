@@ -1,4 +1,4 @@
-import {LOAD_APP_BEGIN, LOAD_APP_SUCCESS, SNACKBAR} from "./indexActions";
+import {LOAD_APP_BEGIN, LOAD_APP_SUCCESS, REQUEST_TIMEOUT_OFF, REQUEST_TIMEOUT_ON, SNACKBAR} from "./indexActions";
 
 export function showSnackbar(message){
   return {
@@ -24,6 +24,18 @@ export function loadApp(){
 export function loadAppSuccess(){
     return {
         type: LOAD_APP_SUCCESS,
+    }
+}
+
+export function requestTimeoutOn(){
+    return {
+        type: REQUEST_TIMEOUT_ON,
+    }
+}
+
+export function requestTimeoutOff(){
+    return {
+        type: REQUEST_TIMEOUT_OFF,
     }
 }
 

@@ -44,7 +44,7 @@ import {
     LOAD_APP_SUCCESS,
     LOAD_APP_BEGIN,
     RECOGNISE_LOGIN_BEGIN,
-    RECOGNISE_LOGIN_FAILURE, RECOGNISE_LOGIN_SUCCESS
+    RECOGNISE_LOGIN_FAILURE, RECOGNISE_LOGIN_SUCCESS, REQUEST_TIMEOUT_ON, REQUEST_TIMEOUT_OFF
 } from "../actions/indexActions";
 import {LABEL_LOBBY} from "../static/Strings";
 
@@ -64,13 +64,14 @@ let defaultState = {
     appBio: strings.APP_BIO_VARIANTS,
     loading: false,
     error: null,
-    notification: false,    //this is the snackbar message - usually errors
+    notification: false,    //this is the snackbar message
     user: defaultUser,
     room: null,
     requests: [],
     message: '', //this shows in title or state updates
     roomTab: 'search', //defaults so bottom nav shows search tab first
     spotify: null,
+    requestTimeoutOn: false,
 };
 
 
@@ -214,6 +215,16 @@ export default function reducer(state = defaultState, action) {
                 loading: false,
                 message: '',
             };
+        case REQUEST_TIMEOUT_ON:
+            return {
+                ...state,
+                requestTimeoutOn: true,
+            };
+        case REQUEST_TIMEOUT_OFF:
+            return {
+                ...state,
+                requestTimeoutOn: false,
+            }
         default:
             return state;
     }

@@ -32,3 +32,6 @@ export const LABEL_LOBBY = "Room Lobby";
 export const LABEL_PENDING_REQUESTS = "Pending Requests";
 export const LABEL_APPROVED_TRACKS = "Approved Tracks";
 export const LABEL_MY_REQUESTS = "My Requests";
+
+export const NOTIF_CHANGE_TIMEOUT = "Room request timeout changed to ";
+export const NOTIF_CHANGE_ROOM_NAME = "Room name change to ";
