@@ -99,11 +99,11 @@ export function respondToRequest(song, roomCode, response) {
 
         db.ref('/requests/' + roomCode + '/' + song.spotifyId).set(songToApprove)
             .then(() => {
-                console.log('song request response success');
+                console.log('song request response success: ' + response);
                 dispatch(respondToRequestSuccess(songToApprove));
                 dispatch(showSnackbar( songToApprove.songTitle + ' by ' + songToApprove.songArtist + (response)?' accepted':' ignored'));
                 setTimeout(() => {
-                    this.props.dispatch(hideSnackbar());
+                    hideSnackbar();
                 },4000);
                 dispatch(refreshRequestList(roomCode));
             })
