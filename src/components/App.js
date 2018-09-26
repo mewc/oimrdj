@@ -16,6 +16,9 @@ import Snackbar from "./Snackbar";
 import LoadApp from './LoadApp';
 import {loadApp, loadAppSuccess} from "../actions/actions";
 
+import theme from '../oimrdjMuiTheme';
+import {MuiThemeProvider} from '@material-ui/core';
+
 
 
 class App extends Component {
@@ -68,13 +71,13 @@ class App extends Component {
         document.title = this.props.title + ' ' + roomName  + '  ' +  this.props.message;
         return (
             <div className="App">
-                    <div>
+                    <MuiThemeProvider theme={theme}>
                         {(this.props.room) ?
                             <Room/>
                             :
                             this.state.startRender
                         }
-                    </div>
+                    </MuiThemeProvider>
                 <Snackbar />
             </div>
         );
