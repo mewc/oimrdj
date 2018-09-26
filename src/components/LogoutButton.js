@@ -17,7 +17,7 @@ class LogoutButton extends React.Component {
     render() {
 
         return <React.Fragment>
-            <Button variant={'extendedFab'} onClick={this.handleLogoutClick.bind(this)}>
+            <Button variant={'outlined'} onClick={this.handleLogoutClick.bind(this)}>
                 {LABEL_LOGOUT}
                 <LogoutIcon />
             </Button>

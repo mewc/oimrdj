@@ -15,16 +15,16 @@ const theme = createMuiTheme({
             "contrastText": "#fff"
         },
         "secondary": {
-            "light": "rgba(151, 0, 245, 0.4)",
-            "main": "rgba(151, 0, 245, 1)",
-            "dark": "rgba(128, 0, 208, 1)",
+            "light": "rgba(255, 85, 85, 1)",
+            "main": "rgba(245, 0, 0, 1)",
+            "dark": "rgba(208, 2, 27, 1)",
             "contrastText": "#fff"
         },
         "error": {
-            "light": "rgba(244, 173, 54, 0.63)",
-            "main": "rgba(244, 173, 54, 1)",
-            "dark": "rgba(192, 138, 46, 1)",
-            "contrastText": "#fff"
+            "light": "rgba(237, 237, 237, 0.63)",
+            "main": "rgba(227, 227, 227, 1)",
+            "dark": "rgba(182, 182, 182, 1)",
+            "contrastText": "rgba(7, 7, 7, 1)"
         },
         "text": {
             "primary": "rgba(0, 0, 0, 0.87)",
