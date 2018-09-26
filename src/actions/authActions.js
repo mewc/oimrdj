@@ -12,16 +12,22 @@ import {
     RECOGNISE_LOGIN_BEGIN, RECOGNISE_LOGIN_SUCCESS, RECOGNISE_LOGIN_FAILURE
 } from "./indexActions";
 import {hideSnackbar, showSnackbar} from "./actions";
+import {store} from "../store";
 
 export function logoutUser() {
     return dispatch => {
         dispatch(logoutBegin());
 
-        dispatch(exitRoom());
-
+        try{
+            let code = store.getState().room.code;
+            dispatch(exitRoom(code))
+        }catch(e){
+            //user was in the room lobby (not joined)
+        }
+        let name = auth().currentUser.displayName;
         auth().signOut()
         .then(() => {
-            dispatch(logoutSuccess());
+            dispatch(logoutSuccess(name));
         })
         .catch((error) => {
             dispatch(logoutFailure(error.message));
@@ -61,7 +67,7 @@ export function loginUser() {
                             dispatch(loginSuccess(user))
                             dispatch(showSnackbar('Logged in as ' + user.name));
                             setTimeout(() => {
-                                this.props.dispatch(hideSnackbar());
+                                dispatch(hideSnackbar());
                             },4000);
                         } else {
                             //CREATE new user if not in system
@@ -113,8 +119,9 @@ export const logoutBegin = () => ({
     payload: {message: 'Logging out'}
 });
 
-export const logoutSuccess = () => ({
+export const logoutSuccess = name => ({
     type: LOGOUT_SUCCESS,
+    payload: {message: name + ' is now logged out'}
 });
 
 export const logoutFailure = error => ({

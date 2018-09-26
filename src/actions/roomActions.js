@@ -41,7 +41,7 @@ export function exitRoom(code) {
         dispatch(exitRoomSuccess(code));
         dispatch(showSnackbar( 'You just left - ' + code));
         setTimeout(() => {
-            this.props.dispatch(hideSnackbar());
+            dispatch(hideSnackbar());
         },4000);
 
     }

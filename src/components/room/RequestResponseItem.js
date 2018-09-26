@@ -27,8 +27,6 @@ class RequestResponseItem extends React.Component {
     }
 
     handleRequestResponse(response){
-        console.log(response);
-        console.log(this.props.data);
         this.props.dispatch(respondToRequest(
             this.props.data,
             this.props.code,

@@ -1,7 +1,7 @@
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import SendIcon from "@material-ui/icons/Send";
 import TickIcon from "@material-ui/icons/Done";
-import BlockIcon from "@material-ui/icons/Block";
+import BlockIcon from "@material-ui/icons/AvTimer";
 import LoadingSpinner from "@material-ui/core/CircularProgress/CircularProgress";
 
 
@@ -17,6 +17,7 @@ class RequestSubmitButton extends React.Component {
     //passes in trackId from traditional react props way.
     constructor(props){
         super(props);
+
         this.state = {
             requested: false,
         }
