@@ -85,8 +85,6 @@ class SearchResultsGrid extends React.Component {
         const {classes} = this.state;
         return (
             <div className={classes.root}>
-                {str.LABEL_SEARCH_RESULTS }
-
                 <GridList cellHeight={200} spacing={1} className={classes.gridList}>
                     {this.props.spotify.map(tile => (
 

@@ -9,8 +9,7 @@ import AppBar from "@material-ui/core/AppBar/AppBar";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import SearchIcon from "@material-ui/icons/Search";
 import theme from "../../oimrdjMuiTheme";
-
-
+import Typography from "@material-ui/core/Typography/Typography";
 
 
 class Search extends React.Component {
@@ -57,7 +56,16 @@ class Search extends React.Component {
 
     render() {
         //bc lazy
-        let classes = {searchIcon: { width: theme.spacing.unit * 9, height: '100%', position: 'absolute', pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', },
+        let classes = {
+            searchIcon: {
+                width: theme.spacing.unit * 9,
+                height: '100%',
+                position: 'absolute',
+                pointerEvents: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            },
             inputInput: {
                 paddingTop: theme.spacing.unit,
                 paddingRight: theme.spacing.unit,
@@ -71,16 +79,16 @@ class Search extends React.Component {
                         width: 200,
                     },
                 },
+                color: theme.palette.primary.contrastText
             },
+            search: {
+                width: '100%',
+            }
         };
 
         return <React.Fragment>
             <AppBar position={'static'}>
                 <Toolbar>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
                         <TextField
                             label={str.LABEL_SPOTIFY_SEARCH + ':'}
                             InputLabelProps={{
@@ -100,18 +108,17 @@ class Search extends React.Component {
                                 input: classes.inputInput,
                             }}
                         />
-                    </div>
+                    {(this.props.spotify) ?
+                        <Typography variant={"caption"}>{this.props.spotify.length + ' results'}</Typography> : ''}
                 </Toolbar>
             </AppBar>
 
-            {(this.props.loading)?<LinearProgress variant={'query'} />:''}
-            {(this.props.spotify)?this.props.spotify.length + ' results':''}
-            {(this.props.spotify)?<SearchResultsGrid />:''}
+            {(this.props.loading) ? <LinearProgress variant={'query'}/> : ''}
+            {(this.props.spotify) ? <SearchResultsGrid/> : ''}
 
         </React.Fragment>
     }
 }
-
 
 
 const mapStateToProps = (state) => {
@@ -120,7 +127,6 @@ const mapStateToProps = (state) => {
         spotify: state.spotify,
     }
 }
-
 
 
 export default connect(mapStateToProps)(Search);

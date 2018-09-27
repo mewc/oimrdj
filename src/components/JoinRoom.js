@@ -55,7 +55,7 @@ class JoinRoom extends Component {
 
         return (
             <React.Fragment>
-                <Grid container spacing={48} direction={'column'} justify={'space-between'} alignItems={'center'}>
+                <Grid container spacing={40} direction={'column'} justify={'space-between'} alignItems={'center'}>
                     <Grid item><TextField
                         label={str.LABEL_ROOM_CODE_INPUT}
                         InputLabelProps={{

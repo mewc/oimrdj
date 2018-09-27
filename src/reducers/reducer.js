@@ -155,6 +155,8 @@ export default function reducer(state = defaultState, action) {
                 error: null,
                 room: null,
                 message: LABEL_LOBBY,
+                requests: [],
+                spotify: null,
             };
         case FIND_ROOM_SUCCESS:
         case CREATE_ROOM_SUCCESS:
