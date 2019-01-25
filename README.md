@@ -1,7 +1,7 @@
-# README_template title of repo for
+# OI MR DJ
 
 
-A React app with Firebase authentication, database and deployment, querying with GraphQL and Spotify API usage all behind a Material-Ui front-end.
+A React app with Firebase authentication, database and deployment, and Spotify API usage all behind a Material-Ui front-end.
 
 Created by [mewc](https://github.com/mewc)
 
@@ -14,7 +14,6 @@ Created by [mewc](https://github.com/mewc)
 
 1. Learning of Firebase usages - Authentication, deployment, database
 1. Using an enterprise API like Spotify
-1. Learn to use GraphQL
 1. Sell the product to places to use
 
 ## Progress
@@ -24,10 +23,11 @@ View the [trello board](https://trello.com/b/9Mwk1r7h/oi-mr-dj) (invite only)
 ## Scaling goals
 
 1. Person sends request to DJ for approval
+1. Incorporate adding to playlist set by the users
 1. Subscription limits for number of users ($)
 1. Add in YouTube video queue rooms
 1. Add in image submission queues
-1. Add in room voting/approval (so admin isn't solely relied on)
+1. Add in room voting/approval (so admin isn't solely relied on) eg. 30% votes positive approves song automagically.
  ___
 
 ## Want to contribute?
